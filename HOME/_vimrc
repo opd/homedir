@@ -299,6 +299,8 @@ let g:deoplete#enable_at_startup = 1
 " cfg_ultisnips
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
+" Find and Replace
+Plug 'brooth/far.vim'
 
 
 " COMPLETION
@@ -352,6 +354,8 @@ Plug 'Quramy/tsuquyomi-vue'
 " jsx
 " cfg_vimjsx
 Plug 'mxw/vim-jsx'
+" highlight css`color: red` inside javascript
+Plug 'styled-components/vim-styled-components'
 " }}}
 " }}}
 
