@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=H0Me/Downloads/Telegram/Telegram
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
+Name[en_US]=Telegram
+Comment[en_US]=
+X-GNOME-Autostart-Delay=10

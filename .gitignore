@@ -1,0 +1,5 @@
+xkb-switch
+setup/*/*
+**/*.deb
+setup/the_silver_searcher
+setup/purple-discord

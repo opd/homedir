@@ -1,0 +1,17 @@
+[user]
+email = andrewfrommoon@gmail.com
+name = Andrew
+[commit]
+template = ~/.gitcommittemplate
+[alias]
+hist = log --all --decorate --oneline --graph --date=relative
+hist2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+out = log --pretty=oneline --abbrev-commit --graph @{u}..
+in = !git fetch && git log --pretty=oneline --abbrev-commit --graph ..@{u}
+root = rev-parse --show-toplevel
+pushupstream = !git push --set-upstream origin $(git symbolic-ref --short HEAD)
+[init]
+  templatedir = ~/.git-templates
+[merge]
+  keepBackup = false;
+  tool = p4merge

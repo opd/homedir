@@ -1,0 +1,29 @@
+[ui]
+username= andrew <andrewfrommoon@gmail.com>
+ssh = ssh -C
+[alias]
+hist = glog --style=$HOME/.dotfiles/hg/log.style
+[extensions]
+shelve=
+rebase=
+graphlog=
+mq=
+purge=
+journal=
+
+[merge-tools]
+p4.priority = 60
+p4.premerge = True
+p4.executable = H0Me/Downloads/p4v-2018.4.1740700/bin/p4merge
+p4.gui = True
+p4.args = $base $local $other $output
+p4.binary = False
+
+[extensions]
+hgext.extdiff =
+
+# PUSH PULL THROUGH TOR
+# [extensions]
+# socks_proxy = ~/.bin/socks_proxy.py
+# [socks_proxy]
+# host = localhost:9150

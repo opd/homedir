@@ -1,0 +1,5 @@
+! scroll bar style
+URxvt.scrollstyle: plain
+URxvt*font: xft:DroidSansMono Nerd Font:size=10
+URxvt.scrollBar: false
+URxvt.internalBorder: 1

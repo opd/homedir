@@ -1,0 +1,30 @@
+# editor
+*.swp
+# frontend
+node_modules/
+yarn.lock
+yarn-error.log
+package-lock.json
+*.min.css
+*.*.min.css
+*.*.*.min.css
+*.min.js
+*.*.min.js
+*.*.*.min.js
+*.*.map
+# webpack
+webpack-stats.new.json
+webpack-stats.json
+# backend
+Pipfile.lock
+*.pyc
+*.*.orig
+#
+*.patch
+*.diff
+*.log
+# sphinx generated html
+_build/html/_modules/
+#  # Madnress
+*.min.*.css
+bower_components

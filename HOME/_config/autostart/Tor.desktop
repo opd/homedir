@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=H0Me/Downloads/tor-browser_en-US/Browser/start-tor-browser --detach
+X-GNOME-Autostart-enabled=true
+NoDisplay=false
+Hidden=false
+Name[en_US]=Tor
+Comment[en_US]=
+X-GNOME-Autostart-Delay=0
