@@ -47,15 +47,24 @@ def convert_to_relative_path(lines, project_path, current_dir):
         yield os.path.relpath(line, current_dir)
 
 
-def write_file_list(tempfile, path, vcs_name, file_extensions, grep_patterns,
-                    project_path=None, current_dir=None,
-                    current_dir_only=False,
-                    ctrlp=None, path_contains=None):
+def write_file_list(
+    tempfile,
+    path,
+    vcs_name,
+    file_extensions,
+    ignore_file_extensions,
+    grep_patterns,
+    project_path=None,
+    current_dir=None,
+    current_dir_only=False,
+    ctrlp=None,
+    path_contains=None,
+):
     shell_cmd = ""
-    if vcs_name == 'hg':
-        shell_cmd = 'hg status -acm'
-    elif vcs_name == 'git':
-        shell_cmd = 'git ls-tree --full-tree -r --name-only HEAD'
+    if vcs_name == "hg":
+        shell_cmd = "hg status -acm"
+    elif vcs_name == "git":
+        shell_cmd = "git ls-tree --full-tree -r --name-only HEAD"
     else:
         raise NotImplementedError
 
@@ -74,8 +83,10 @@ def write_file_list(tempfile, path, vcs_name, file_extensions, grep_patterns,
         path = os.path.relpath(current_dir, project_path)
         lines = filter(lambda x: x.startswith(path), lines)
 
-    func = get_regex_filter(".*(%s)$" % "|".join(EXTENSION_BLACK_LIST),
-                            inverse=True)
+    func = get_regex_filter(
+        ".*(%s)$" % "|".join(EXTENSION_BLACK_LIST + ignore_file_extensions),
+        inverse=True,
+    )
     lines = filter(func, lines)
     if file_extensions:
         func = get_regex_filter(".*(%s)$" % "|".join(file_extensions))
@@ -106,7 +117,8 @@ def get_width():
 FILE_EXTENSIONS = [
     'sql',
     ('js', ['js', 'jsx', 'ts']),
-    ('ts', ['ts', 'tsx']),
+    ('ts', ['ts', 'tsx'], ['graphql.ts']),
+    ('graphql', ['graphql.ts']),
     ('css', ['css', 'scss', 'less', 'sass']),
     'html',
     'py',
@@ -308,7 +320,7 @@ def main():
     file_extensions = []
     for pattern in FILE_EXTENSIONS:
         if not isinstance(pattern, str):
-            pattern, arr = pattern
+            pattern = pattern[0]
         parser.add_argument('--' + pattern, dest=pattern, action='store_true')
 
     try:
@@ -318,6 +330,7 @@ def main():
         params = ParserFallback(search)
 
     file_extensions = []
+    ignore_file_extensions = []
     grep_patterns = []
     file_name = ''
 
@@ -325,9 +338,15 @@ def main():
         if isinstance(pattern, str):
             arr = [pattern]
         else:
-            pattern, arr = pattern
+            exclude_arr = None
+            if len(pattern) == 3:
+                pattern, arr, exclude_arr = pattern
+            else:
+                pattern, arr = pattern
         if getattr(params, pattern):
             file_extensions.extend(arr)
+            if exclude_arr:
+                ignore_file_extensions.extend(exclude_arr)
 
     if params.migrations:
         grep_patterns.append('.*\/[0-9]{4}[^/]+[.]py$')
@@ -345,11 +364,19 @@ def main():
     file_list = None
     if vcs_name:
         file_list = tempfile.NamedTemporaryFile()
-        write_file_list(file_list, path, vcs_name,
-                        file_extensions, grep_patterns, ctrlp=params.ctrlp,
-                        project_path=path, current_dir=current_dir,
-                        current_dir_only=params.cur_dir,
-                        path_contains=params.path_contains)
+        write_file_list(
+            file_list,
+            path,
+            vcs_name,
+            file_extensions,
+            ignore_file_extensions,
+            grep_patterns,
+            ctrlp=params.ctrlp,
+            project_path=path,
+            current_dir=current_dir,
+            current_dir_only=params.cur_dir,
+            path_contains=params.path_contains,
+        )
 
     whole_word = params.word
     command = 'ack -s --noheading --column --nocolor'
