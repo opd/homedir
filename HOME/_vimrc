@@ -515,7 +515,7 @@ nmap <F8> :TagbarToggle<CR>
 " cfg_airline
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'base16'
-let g:airline#extensions#tagbar#flags = 'f'
+" let g:airline#extensions#tagbar#flags = 'f'
 
 let g:airline_mode_map = {
       \ '__' : '-',
@@ -536,15 +536,15 @@ let g:airline_section_z='%3p%% %#__accent_bold#%{g:airline_symbols.linenr}%4l%#_
 " modified, remove spaces
 let g:airline_section_z='%p%%%#__accent_bold#%{g:airline_symbols.linenr}%l%#__restore#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__#:%v'
 " cfg_capslock
-let g:airline#extensions#capslock#enabled = 1
+" let g:airline#extensions#capslock#enabled = 1
 let g:airline_skip_empty_sections = 1
 " determine whether inactive windows should have the left section collapsed to
 " only the filename of that buffer.  >
 let g:airline_inactive_collapse = 1
 
 " enable only this extensions
-let g:airline#extensions#hunks#non_zero_only = 1
-let g:airline#extensions#virtualenv#enabled = 0
+" let g:airline#extensions#hunks#non_zero_only = 1
+" let g:airline#extensions#virtualenv#enabled = 0
 " cfg_devicons
 let g:webdevicons_enable_airline_statusline_fileformat_symbols = 0
 
