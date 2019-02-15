@@ -252,7 +252,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'ryanoasis/vim-devicons'
 
 " COLORS
-Plug 'ap/vim-css-color', {'for': ['css', 'sass', 'scss', 'less']}
+Plug 'ap/vim-css-color', {'for': ['css', 'sass', 'scss', 'less', 'ts']}
 " }}}
 "    .oooooo.                   .o8   o8o
 "   d8P'  `Y8b                 "888   `"'
@@ -515,7 +515,7 @@ nmap <F8> :TagbarToggle<CR>
 " cfg_airline
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'base16'
-" let g:airline#extensions#tagbar#flags = 'f'
+let g:airline#extensions#tagbar#flags = 'f'
 
 let g:airline_mode_map = {
       \ '__' : '-',
@@ -562,7 +562,7 @@ let g:ctrlp_show_hidden = 1
 let g:ctrlp_user_command = {
     \ 'types': {
         \ 1: ['.git', 'cd %s && git ls-files'],
-        \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+        \ 2: ['.hg', 'hg --cwd %s locate -I . | grep -v __generated__'],
         \ },
     \ 'fallback': 'find %s -type f'
     \ }
