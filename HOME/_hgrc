@@ -3,6 +3,7 @@ username= andrew <andrewfrommoon@gmail.com>
 ssh = ssh -C
 [alias]
 hist = glog --style=$HOME/.dotfiles/hg/log.style
+d = diff -X 'glob:**.graphql.ts'
 [extensions]
 shelve=
 rebase=
