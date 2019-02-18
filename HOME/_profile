@@ -21,3 +21,4 @@ fi
 
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+setxkbmap -option caps:none
