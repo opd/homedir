@@ -271,6 +271,8 @@ Plug 'ap/vim-css-color', {'for': ['css', 'sass', 'scss', 'less', 'ts']}
 Plug 'tyru/caw.vim'
 " check context file type for comments
 Plug 'Shougo/context_filetype.vim'
+" asynchronous execution library
+" Plug 'Shougo/vimproc.vim'
 
 "" BREAKS delimitMate, or not
 ""Completion on tab
@@ -590,7 +592,7 @@ let g:jedi#show_call_signatures = 0
 " cfg_ale
 let g:ale_linters = {
    \ 'python': ['flake8'],
-   \ 'typescript': ['tslint'],
+   \ 'typescript': ['tslint', 'tsserver'],
    \}
 let g:airline#extensions#ale#enabled = 1
 nmap ]e <Plug>(ale_next_wrap)
@@ -709,3 +711,7 @@ autocmd FileType * call LC_maps()
 " cfg_ultisnips
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+" cfg_tsuquyomi
+let g:tsuquyomi_disable_quickfix=1
+autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()

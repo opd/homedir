@@ -16,7 +16,7 @@ pushupstream = !git push --set-upstream origin $(git symbolic-ref --short HEAD)
   keepBackup = false;
   tool = p4merge
 [filter "lfs"]
-	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+	required = true
