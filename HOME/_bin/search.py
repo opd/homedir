@@ -227,6 +227,10 @@ def only_count_per_file(data):
             prev_col = col
             prev_code_line = code_line
             count = 1
+
+    if prev_file_name is None:
+        raise StopIteration()
+
     yield (prev_file_name, prev_line,
            prev_col + ':' + str(count), prev_code_line)
 
@@ -301,8 +305,14 @@ def is_simple_pattern(pattern):
     return bool(re.match(r"^[A-Za-z0-9_]+$", pattern))
 
 
+class ArgumentParser(argparse.ArgumentParser):
+
+    def error(self, message):
+        raise ValueError
+
+
 def main():
-    parser = argparse.ArgumentParser()
+    parser = ArgumentParser(conflict_handler='resolve')
     parser.add_argument('search_pattern')
     parser.add_argument('--mig', dest='migrations', action='store_true')
     parser.add_argument('--class', dest='class_', action='store_true')
@@ -325,7 +335,7 @@ def main():
 
     try:
         params = parser.parse_args()
-    except (argparse.ArgumentError, SystemExit):
+    except ValueError:
         search = " ".join(sys.argv[1:])
         params = ParserFallback(search)
 

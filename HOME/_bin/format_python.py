@@ -28,11 +28,14 @@ def handle_indentation(lines, indent_width=4):
             space_count = space_count_before(line)
             indent_count = space_count // indent_width
             for i in range(indent_count):
-                s = " " * indent_width * i + 'if '
-                if i == indent_count - 1:
-                    s += "'%s'" % MARK
+                if i == 0:
+                    s = "def f(a='%s')" % BEFORE_MARK
                 else:
-                    s += "'%s'" % BEFORE_MARK
+                    s = " " * indent_width * i + 'if '
+                    if i == indent_count - 1:
+                        s += "'%s'" % MARK
+                    else:
+                        s += "'%s'" % BEFORE_MARK
                 s += ':\n'
                 yield s
         yield line

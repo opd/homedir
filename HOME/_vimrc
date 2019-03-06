@@ -440,6 +440,8 @@ set foldlevel=99
 "" Enable folding with spacebar
 nnoremap <space> za
 
+" Live buffer without saving
+set hidden
 "" key mapping for saving file, save
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>l:w<CR>i
@@ -714,4 +716,4 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
 " cfg_tsuquyomi
 let g:tsuquyomi_disable_quickfix=1
-autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
+" autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
