@@ -419,8 +419,7 @@ set colorcolumn=80
 """ SLOWDOWN!!!
 set cursorcolumn
 set listchars=tab:-
-
-
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 set list
 "" speed up
 set lazyredraw
@@ -445,6 +444,8 @@ set foldlevel=99
 "" Enable folding with spacebar
 nnoremap <space> za
 
+" Live buffer without saving
+set hidden
 "" key mapping for saving file, save
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <Esc>l:w<CR>i
