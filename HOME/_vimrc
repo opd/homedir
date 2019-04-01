@@ -399,6 +399,11 @@ set hls
 set incsearch
 set ignorecase
 set smartcase
+" persistent undo
+if has('persistent_undo')
+  set undodir=~/.vim/undo,.
+  set undofile
+endif
 " yank to clipboard
 set clipboard=unnamedplus
 " select recently pasted, don't work(
@@ -563,7 +568,7 @@ let g:ctrlp_show_hidden = 1
 
 let g:ctrlp_user_command = {
     \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files'],
+        \ 1: ['.git', 'cd %s && git ls-files | grep -v __generated__'],
         \ 2: ['.hg', 'hg --cwd %s locate -I . | grep -v __generated__'],
         \ },
     \ 'fallback': 'find %s -type f'
@@ -714,4 +719,4 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
 " cfg_tsuquyomi
 let g:tsuquyomi_disable_quickfix=1
-autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
+" autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
