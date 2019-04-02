@@ -141,6 +141,8 @@ Plug 'kyuhi/vim-emoji-complete'
 " Select rectangle then press '+O','+>','++>'
 Plug 'gyim/vim-boxdraw'
 
+Plug 'mbbill/undotree'
+
 " \p, \P  next, prev
 " vmap S conflict with vim surround
 " Plug 'maxbrunsfeld/vim-yankstack'
@@ -418,6 +420,11 @@ set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNO
 set list
 "" speed up
 set lazyredraw
+
+if has("persistent_undo")
+  set undofile " Maintain undo history between sessions
+  set undodir=~/.vim/undodir
+endif
 
 
 set expandtab tabstop=4 shiftwidth=4 softtabstop=4
