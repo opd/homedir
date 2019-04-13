@@ -1,6 +1,7 @@
 # vim8
 sudo apt-get remove -y vim
-sudo add-apt-repository -y ppa:jonathonf/vim
+# for old Ubuntu 16.04 
+# sudo add-apt-repository -y ppa:jonathonf/vim
 sudo apt-get update
 ## vim
 sudo apt-get install -y vim vim-nox vim-gnome vim-gtk flake8 pylint ack-grep

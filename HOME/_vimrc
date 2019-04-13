@@ -1,5 +1,6 @@
 " vim: foldmethod=marker:foldlevel=0
 "
+set nocompatible
 if has('nvim')
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
         silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -13,6 +14,7 @@ endif
 
 " PLUGINS {{{
 " PLUG SETTINGS {{{
+if exists('g:loaded_plug'):
 if has('nvim')
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
         silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -392,6 +394,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'wesQ3/vim-windowswap'
 " }}}
 call plug#end()
+endif
 " }}}
 
 " NO PLUGIN {{{
@@ -430,7 +433,9 @@ endif
 set expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 "" mouse support
-set mouse=a
+if has('mouse')
+  set mouse=a
+endif
 if !has("nvim")
     set ttymouse=xterm2
 endif
@@ -502,6 +507,7 @@ endif
 " }}}
 
 "" JAVASCRIPT
+if exists('g:loaded_plug'):
 vmap <c-b> :call JsBeautify()<cr>
 
 "" GVIM
@@ -723,3 +729,4 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " cfg_tsuquyomi
 let g:tsuquyomi_disable_quickfix=1
 " autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
+endif
