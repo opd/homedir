@@ -7,10 +7,11 @@ sudo apt install -y aptitude software-properties-common git curl
 bash -x setup/vim.sh
 bash -x setup/vim-xkb-switch.sh
 bash -x setup/python.sh
-#bash -x setup/nerdfont.sh
+# bash -x setup/nerdfont.sh
 bash -x setup/tmux.sh
-bash -x setup/keepass2.sh
-bash -x setup/urxvt.sh
+# bash -x setup/keepass2.sh
+bash -x setup/keepassx.sh
+# bash -x setup/urxvt.sh
 bash -x setup/ranger.sh
 
 # base16 colors
