@@ -408,7 +408,12 @@ def main():
     if file_list:
         command += ' --files-from=%s' % file_list.name
 
+    additional_words = []
+
     search_pattern = params.search_pattern
+    if '@' in search_pattern:
+        additional_words = search_pattern.split('@')
+        search_pattern = additional_words.pop(0)
     initial_search_pattern = search_pattern
     search_pattern = format_search_pattern(search_pattern)
     if params.class_:
@@ -452,6 +457,16 @@ def main():
 
     lines = iter(p.stdout.readline, b'')
     lines = iterate_output(lines)
+
+    def filter_additional_words(line_item):
+        s = line_item[3]
+        for word in additional_words:
+            if word not in s:
+                return False
+        return True
+    if additional_words:
+        lines = filter(filter_additional_words, lines)
+
     lines = filter_max_length(lines, MAX_LINES)
 
     search_pattern = params.search_pattern
