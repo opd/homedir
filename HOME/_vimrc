@@ -1,5 +1,6 @@
 " vim: foldmethod=marker:foldlevel=0
 "
+set nocompatible
 if has('nvim')
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
         silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -13,6 +14,7 @@ endif
 
 " PLUGINS {{{
 " PLUG SETTINGS {{{
+if exists('g:loaded_plug')
 if has('nvim')
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
         silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -140,6 +142,8 @@ Plug 'kyuhi/vim-emoji-complete'
 " DRAWING
 " Select rectangle then press '+O','+>','++>'
 Plug 'gyim/vim-boxdraw'
+
+Plug 'mbbill/undotree'
 
 " \p, \P  next, prev
 " vmap S conflict with vim surround
@@ -390,6 +394,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'wesQ3/vim-windowswap'
 " }}}
 call plug#end()
+endif
 " }}}
 
 " NO PLUGIN {{{
@@ -424,11 +429,18 @@ set list
 "" speed up
 set lazyredraw
 
+if has("persistent_undo")
+  set undofile " Maintain undo history between sessions
+  set undodir=~/.vim/undodir
+endif
+
 
 set expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 "" mouse support
-set mouse=a
+if has('mouse')
+  set mouse=a
+endif
 if !has("nvim")
     set ttymouse=xterm2
 endif
@@ -500,6 +512,7 @@ endif
 " }}}
 
 "" JAVASCRIPT
+if exists('g:loaded_plug')
 vmap <c-b> :call JsBeautify()<cr>
 
 "" GVIM
@@ -511,10 +524,19 @@ if has('gui_running')
     set guifont=DroidSansMonoForPowerline\ Nerd\ Font\ 11
 endif
 
+function! HasColorscheme(name)
+    let pat = 'colors/'.a:name.'.vim'
+    return !empty(globpath(&rtp, pat))
+endfunction
+
 let base16colorspace=256
 " base 16 theme: vvv
 " colorscheme base16-monokai
-colorscheme monokai
+
+if HasColorscheme('monokai')
+    colorscheme monokai
+endif
+
 set t_Co=256
 
 " cfg_tagbar
@@ -721,3 +743,4 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 " cfg_tsuquyomi
 let g:tsuquyomi_disable_quickfix=1
 " autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
+endif

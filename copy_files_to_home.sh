@@ -1,7 +1,13 @@
 cd HOME
 set -e
 
-read -r -p "Are you sure? [y/N] " response
+
+if [ "$1" == "-y" ]; then
+    response=y
+else
+    read -r -p "Are you sure? [y/N] " response
+fi
+
 case "$response" in
     [yY][eE][sS]|[yY])
         echo ok

@@ -1,0 +1,3 @@
+sudo visudo
+
+USERNAME ALL=(ALL) NOPASSWD: ALL
