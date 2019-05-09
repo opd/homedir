@@ -13,7 +13,12 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 12
+font pango:monospace 9
+# Change window header color
+# https://thomashunter.name/i3-configurator/
+client.focused          #137710 #137710 #FFFFFF #133700   #133700
+for_window [class=".*"] title_format "<span size='smaller'>   %title</span>"
+
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -121,7 +126,17 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+set $mode_system (e) logout, (Esc, Return) Cancel
+mode "$mode_system" {
+    bindsym e exec --no-startup-id i3-msg exit
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+e mode "$mode_system"
+
 
 bindsym $mod+r mode "resize"
 
@@ -171,3 +186,6 @@ bindsym $mod + plus exec --no-startup-id amixer -D pulse set Master 5%+
 # mute sound
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master 1+ toggle
 
+# Startup applications
+# Dropbox
+exec --no-startup-id dropbox start
