@@ -397,116 +397,9 @@ call plug#end()
 endif
 " }}}
 
-" NO PLUGIN {{{
-set nu
-" search
-set hls
-set incsearch
-set ignorecase
-set smartcase
-" yank to clipboard
-set clipboard=unnamedplus
-" select recently pasted, don't work(
-" nnoremap gp `[v`]
+source ~/.vimrc_noplugin
 
-" Escape insert mode on jj
-imap jj <Esc>
-imap jk <Esc>
-
-"" highlight line and column
-set cursorline
-set colorcolumn=80
-""" SLOWDOWN!!!
-set cursorcolumn
-set listchars=tab:-
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
-set list
-"" speed up
-set lazyredraw
-
-if has("persistent_undo")
-  set undofile " Maintain undo history between sessions
-  set undodir=~/.vim/undodir
-endif
-
-
-set expandtab tabstop=4 shiftwidth=4 softtabstop=4
-
-"" mouse support
-if has('mouse')
-  set mouse=a
-endif
-if !has("nvim")
-    set ttymouse=xterm2
-endif
-
-"" :sp <filename> - split horizontally
-"" :vs <filename> - split vertically
-set splitbelow
-set splitright
-
-"" Enable folding
-set foldmethod=indent
-set foldlevel=99
-"" Enable folding with spacebar
-nnoremap <space> za
-
-" Live buffer without saving
-set hidden
-"" key mapping for saving file, save
-nnoremap <C-s> :w<CR>
-inoremap <C-s> <Esc>l:w<CR>i
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! w !sudo tee > /dev/null %
-"" key map for paste
-inoremap <C-v> <Esc>"+pi
-
-" Copy filename to clipboard
-" name only
-nnoremap csn :let @+=expand("%:t")<CR>
-" full path
-nnoremap csf :let @+=expand("%:p")<CR>
-
-" no timeout on visual mode
-set timeoutlen=1000 ttimeoutlen=0
-
-set background=dark
-
-" Tell vim to remember certain things when we exit
-"   '10  :  marks will be remembered for up to 10 previously edited files
-"   "100 :  will save up to 100 lines for each register
-"   :20  :  up to 20 lines of command-line history will be remembered
-"   %    :  saves and restores the buffer list
-"   n... :  where to save the viminfo files"'
-if has('nvim')
-    set viminfo='10,\"100,:20,%,n~/.nviminfo'
-else
-    set viminfo='10,\"100,:20,%,n~/.viminfo'
-endif
-set directory=~/.vim/swapfiles//
-
-set modeline
-set modelines=5
-
-set iminsert=0
-set imsearch=0
-
-" show long lines rather than a column of "@"
-set display+=lastline
-
-
-nnoremap <F7> koimport pdb;pdb.set_trace()<ESC>^
-
-if 0
-    augroup myvimrc
-        au!
-        au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
-    augroup END
-endif
-
-" }}}
-
-"" JAVASCRIPT
+" JAVASCRIPT
 if exists('g:loaded_plug')
 vmap <c-b> :call JsBeautify()<cr>
 
@@ -651,6 +544,7 @@ let g:wordmotion_prefix = '<Leader>'
 
 " cfg_ack
 let g:ackprg = '~/.bin/search.py'
+let g:ack_autoclose = 1
 " cfg_ag
 " let g:ag_prg = 'H0Me/.bin/search.py'
 
