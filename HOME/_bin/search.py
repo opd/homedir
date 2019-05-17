@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import itertools
 import operator as op
 import os
 import re
@@ -59,24 +60,31 @@ def write_file_list(
     current_dir_only=False,
     ctrlp=None,
     path_contains=None,
+    debug_flags=None,
 ):
     shell_cmd = ""
     if vcs_name == "hg":
-        shell_cmd = "hg status -acm"
+        shell_cmds = ["hg status -acm"]
     elif vcs_name == "git":
-        shell_cmd = "git ls-tree --full-tree -r --name-only HEAD"
+        shell_cmds = [
+            "git ls-tree --full-tree -r --name-only HEAD",
+            "git --no-pager diff --cached --name-only",
+        ]
     else:
         raise NotImplementedError
 
-    command = shell_cmd.split(' ')
-    kwargs = {
-        "stdout": subprocess.PIPE,
-        "stderr": subprocess.DEVNULL,
-    }
-    p = subprocess.Popen(command, **kwargs)
-    lines = iter(p.stdout.readline, b'')
-    if vcs_name == 'hg':
-        lines = map(op.itemgetter(slice(2, None)), lines)
+    lines = []
+    for shell_cmd in shell_cmds:
+        command = shell_cmd.split(' ')
+        kwargs = {
+            "stdout": subprocess.PIPE,
+            "stderr": subprocess.DEVNULL,
+        }
+        p = subprocess.Popen(command, **kwargs)
+        output_lines = iter(p.stdout.readline, b'')
+        if vcs_name == 'hg':
+            output_lines = map(op.itemgetter(slice(2, None)), output_lines)
+        lines = itertools.chain(output_lines, lines)
 
     lines = map(lambda x: x.decode("utf-8", "replace"), lines)
     if current_dir_only:
@@ -103,6 +111,11 @@ def write_file_list(
         lines = filter(func, lines)
 
     lines = convert_to_relative_path(lines, project_path, current_dir)
+
+    debug_flags = debug_flags or []
+    if 'files' in debug_flags:
+        lines = list(lines)
+        print_lines(lines)
 
     with open(tempfile.name, 'w') as f:
         for line in lines:
@@ -180,6 +193,11 @@ def print_line(file_name,
                                   initial_search_pattern,
                                   max_code_line_length) + label
     print("{0}:{1}:{2}:{3}".format(file_name, line, column, code_line))
+
+
+def print_lines(lines):
+    for line in lines:
+        print(line)
 
 
 def iterate_output(lines):
@@ -326,6 +344,7 @@ def main():
     parser.add_argument('--cur-dir', dest='cur_dir', action='store_true')
     parser.add_argument('--cp', dest='ctrlp')
     parser.add_argument('--pc', dest='path_contains')
+    parser.add_argument('--debug', nargs='*')
 
     file_extensions = []
     for pattern in FILE_EXTENSIONS:
@@ -338,6 +357,8 @@ def main():
     except ValueError:
         search = " ".join(sys.argv[1:])
         params = ParserFallback(search)
+
+    debug_flags = set([] if params.debug is None else params.debug)
 
     file_extensions = []
     ignore_file_extensions = []
@@ -386,6 +407,7 @@ def main():
             current_dir=current_dir,
             current_dir_only=params.cur_dir,
             path_contains=params.path_contains,
+            debug_flags=debug_flags,
         )
 
     whole_word = params.word
