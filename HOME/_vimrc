@@ -248,6 +248,7 @@ Plug 'Yggdroot/indentLine'
 " colors vim highlighting
 " Plug 'chriskempson/base16-vim'
 Plug 'crusoexia/vim-monokai'
+Plug 'NLKNguyen/papercolor-theme'
 " cfg_airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -423,6 +424,11 @@ let base16colorspace=256
 
 if HasColorscheme('monokai')
     colorscheme monokai
+endif
+
+if HasColorscheme('PaperColor')
+    set background=light
+    colorscheme PaperColor
 endif
 
 set t_Co=256
