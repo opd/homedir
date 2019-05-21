@@ -249,6 +249,7 @@ Plug 'Yggdroot/indentLine'
 " Plug 'chriskempson/base16-vim'
 Plug 'crusoexia/vim-monokai'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'altercation/vim-colors-solarized'
 " cfg_airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -422,13 +423,19 @@ let base16colorspace=256
 " base 16 theme: vvv
 " colorscheme base16-monokai
 
-if HasColorscheme('monokai')
-    colorscheme monokai
-endif
+" "if HasColorscheme('monokai')
+" "    colorscheme monokai
+" "endif
 
-if HasColorscheme('PaperColor')
+" "if HasColorscheme('PaperColor')
+" "    set background=light
+" "    colorscheme PaperColor
+" "endif
+
+if HasColorscheme('solarized')
+    let g:solarized_termcolors=256
     set background=light
-    colorscheme PaperColor
+    colorscheme solarized
 endif
 
 set t_Co=256
