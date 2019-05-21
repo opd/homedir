@@ -131,9 +131,10 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-set $mode_system (e) logout, (Esc, Return) Cancel
+set $mode_system (e) logout, (l) lock (Esc, Return) Cancel
 mode "$mode_system" {
     bindsym e exec --no-startup-id i3-msg exit
+    bindsym l exec --no-startup-id i3lock, mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -195,3 +196,5 @@ exec --no-startup-id dropbox start
 bindsym Print exec gnome-screenshot -i
 
 #  https://unix.stackexchange.com/questions/450700/opening-a-programme-in-a-floating-window-in-i3
+bindsym $mod+greater focus output right
+bindsym $mod+less focus output left
