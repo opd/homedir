@@ -1,0 +1,61 @@
+snippet gen
+import { `!p snip.rv = snip.basename`_$1 } from '__generated__/`!p snip.rv = snip.basename`_$1.graphql';
+endsnippet
+
+snippet sfc
+const $1: React.SFC<{}> = () => {
+  return (
+    <div>Not implemented</div>
+  );
+}
+endsnippet
+
+snippet start
+import * as React from 'react';
+
+interface Props {
+  temp?: string;
+}
+
+const $1: React.SFC<Props> = () => {
+  return (
+    <div>Not implemented</div>
+  );
+}
+export default $1;
+endsnippet
+
+snippet frag
+const ${1:name}Fragment = createFragmentContainer(
+  $1,
+  {
+    ${2:propName}: graphql\`
+      fragment `!p snip.rv = snip.basename`_$2 on ${3:NodeName}Node {
+        $0
+      }
+    \`,
+  }
+);
+endsnippet
+
+snippet mut
+const $1Mutation = graphql\`
+  mutation `!p snip.rv = (t[1][:1].upper() + t[1][1:])`_$1Mutation($input: `!p snip.rv = (t[1][:1].upper() + t[1][1:])`Input!) {
+    ${1:mutationName}(input: $input) {
+      id
+      errors
+    }
+  }
+\`;
+
+export const $1 = (
+  environment: Environment,
+  input: `!p snip.rv = (t[1][:1].upper() + t[1][1:])`Input,
+  onCompleted: MutationConfig<`!p snip.rv = snip.basename`_`!p snip.rv = (t[1][:1].upper() + t[1][1:])`>['onCompleted']=_.noop,
+) =>
+  commitMutation(environment, {
+    mutation: $1Mutation,
+    variables: { input },
+    onCompleted,
+  });
+endsnippet
