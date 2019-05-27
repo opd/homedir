@@ -59,3 +59,22 @@ export const $1 = (
     onCompleted,
   });
 endsnippet
+
+snippet query
+const ${1:`!p snip.rv = snip.basename`}Renderer = () => (
+  <QueryRenderer<$1Query>
+    environment={environment}
+    variables={{}}
+    query={graphql\`
+      query $1Query {
+        viewer {
+          ...`!p snip.rv = snip.basename`_viewer
+        }
+      }
+    \`}
+    render=\{data =>
+      data.props ? <$1Fragment viewer={data.props.viewer} /> : <Loader />
+    \}
+  />
+);
+endsnippet
