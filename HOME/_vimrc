@@ -646,3 +646,9 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 let g:tsuquyomi_disable_quickfix=1
 " autocmd InsertLeave,BufWritePost *.ts,*.tsx call tsuquyomi#asyncGeterr()
 endif
+
+let g:user_emmet_settings = {
+\  'typescript' : {
+\      'extends' : 'jsx',
+\  },
+\}

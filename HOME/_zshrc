@@ -127,6 +127,8 @@ dao () {
 }
 
 alias dap="django-admin shell_plus"
+alias dapp="django-admin shell_plus --print-sql"
+alias daf="django-admin set_fake_passwords --password 123"
 alias dar="django-admin runserver"
 alias daro="django-admin runserver 0.0.0.0:8000"
 alias dar1="django-admin runserver localhost:8001"

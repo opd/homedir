@@ -3,7 +3,7 @@ import { `!p snip.rv = snip.basename`_$1 } from '__generated__/`!p snip.rv = sni
 endsnippet
 
 snippet sfc
-const $1: React.SFC<{}> = () => {
+const $1: React.SFC<$1Props> = (props) => {
   return (
     <div>Not implemented</div>
   );
@@ -36,6 +36,10 @@ const ${1:name}Fragment = createFragmentContainer(
     \`,
   }
 );
+endsnippet
+
+snippet cl
+console.log('${1:name}=', $1);
 endsnippet
 
 snippet mut
