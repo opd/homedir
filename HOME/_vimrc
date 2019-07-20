@@ -1,20 +1,9 @@
 " vim: foldmethod=marker:foldlevel=0
 "
 set nocompatible
-if has('nvim')
-    if empty(glob('~/.config/nvim/autoload/plug.vim'))
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    endif
-    call plug#begin('~/.config/nvim/plugged')
-else
-    call plug#begin('~/.vim/plugged')
-endif
 
 " PLUGINS {{{
 " PLUG SETTINGS {{{
-if exists('g:loaded_plug')
 if has('nvim')
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
         silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -25,6 +14,7 @@ if has('nvim')
 else
     call plug#begin('~/.vim/plugged')
 endif
+if exists('g:loaded_plug')
 " }}}
 "    ___  ___                                    _
 "    |  \/  |                                   | |
@@ -359,6 +349,7 @@ Plug 'Quramy/tsuquyomi-vue'
 " JAVASCRIPT {{{
 "" JAVASCRIPT
 "" Plug 'wokalski/autocomplete-flow'
+Plug 'pangloss/vim-javascript'
 " jsx
 " cfg_vimjsx
 Plug 'mxw/vim-jsx'
