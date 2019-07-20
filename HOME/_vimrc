@@ -67,6 +67,7 @@ Plug 'easymotion/vim-easymotion'
 ""   -----------|-----------
 ""   {("<C-G>g  |  {("")}|
 " Plug 'Raimondi/delimitMate'
+" ^q ] - for inserting brace. (Standard vim)
 Plug 'jiangmiao/auto-pairs'
 
 "" :StripWhitespace - remove whitespaces
@@ -263,6 +264,9 @@ Plug 'ap/vim-css-color', {'for': ['css', 'sass', 'scss', 'less', 'ts']}
 " ALL {{{
 "
 " comments, commenter
+" Language Server Client
+" :CocInstall coc-python, coc-tsserver
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " cfg_caw
 Plug 'tyru/caw.vim'
 " check context file type for comments
@@ -643,3 +647,5 @@ let g:user_emmet_settings = {
 \      'extends' : 'jsx',
 \  },
 \}
+
+nmap <silent> gd <Plug>(coc-definition)
