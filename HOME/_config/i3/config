@@ -218,6 +218,7 @@ bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master 1+ toggle
 exec --no-startup-id dropbox start
 # screenshot
 bindsym Print exec gnome-screenshot -i
+bindsym Shift+Print exec flameshot gui
 
 #  https://unix.stackexchange.com/questions/450700/opening-a-programme-in-a-floating-window-in-i3
 bindsym $mod+greater focus output right
