@@ -332,19 +332,19 @@ Plug 'majutsushi/tagbar'
 " Plug 'ambv/black'
 " }}}
 " TYPESCRIPT {{{
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 " SETTINGS in typescript.vim
 " Make your Vim a TypeScript IDE
 " cfg_tsuquyomi
-Plug 'Quramy/tsuquyomi'
+" Plug 'Quramy/tsuquyomi'
 "
-if has('nvim')
-  Plug 'HerringtonDarkholme/yats.vim'
-  Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-  " For Denite features
-  Plug 'Shougo/denite.nvim'
-endif
+" if has('nvim')
+"   Plug 'HerringtonDarkholme/yats.vim'
+"   Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+"   " For Denite features
+"   Plug 'Shougo/denite.nvim'
+" endif
 " }}}
 " VUEJS {{{
 " Syntax highlight
