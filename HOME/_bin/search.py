@@ -48,6 +48,15 @@ def convert_to_relative_path(lines, project_path, current_dir):
         yield os.path.relpath(line, current_dir)
 
 
+def remove_duplications(lines):
+    s = set([])
+    for line in lines:
+        if line in s:
+            continue
+        s.add(line)
+        yield line
+
+
 def write_file_list(
     tempfile,
     path,
@@ -109,6 +118,7 @@ def write_file_list(
     for pattern in grep_patterns:
         func = get_regex_filter(pattern)
         lines = filter(func, lines)
+    lines = remove_duplications(lines)
 
     lines = convert_to_relative_path(lines, project_path, current_dir)
 
