@@ -30,6 +30,7 @@ if exists('g:loaded_plug')
 " vi{prefix}w
 " cfg_wordmotion
 Plug 'chaoren/vim-wordmotion'
+" Brings physics-based smooth scrolling to the Vim/Neovim world!
 " cfg_comfortablemotion
 Plug 'yuttie/comfortable-motion.vim'
 
@@ -89,6 +90,7 @@ Plug 'vim-scripts/vis'
 Plug 'tpope/vim-surround'
 
 " adjusts 'shiftwidth' and 'expandtab' from current file
+" :Sleuth Manually detect indentation
 Plug 'tpope/vim-sleuth'
 " crs snake_case
 " crm MixedCase
@@ -109,6 +111,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 " switch True <=> False and etc.
 " '-' - to switch
+" cfg_switch
 Plug 'AndrewRadev/switch.vim'
 
 
@@ -123,7 +126,6 @@ Plug 'fadein/vim-FIGlet'
 " additions to `ga` (character representation)
 Plug 'tpope/vim-characterize'
 
-
 " emoji
 " C-X C-E
 Plug 'kyuhi/vim-emoji-complete'
@@ -133,10 +135,12 @@ Plug 'kyuhi/vim-emoji-complete'
 " Select rectangle then press '+O','+>','++>'
 Plug 'gyim/vim-boxdraw'
 
+" :UndotreeToggle
 Plug 'mbbill/undotree'
 
 " \p, \P  next, prev
 " vmap S conflict with vim surround
+" cfg_yankstack
 " Plug 'maxbrunsfeld/vim-yankstack'
 
 
@@ -643,3 +647,13 @@ let g:user_emmet_settings = {
 \      'extends' : 'jsx',
 \  },
 \}
+
+" cfg_switch
+let g:switch_custom_definitions =
+    \ [
+    \   ['!==', '===']
+    \ ]
+
+" cfg_yankstack
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
