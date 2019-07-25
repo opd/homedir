@@ -649,3 +649,4 @@ let g:user_emmet_settings = {
 \}
 
 nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gu <Plug>(coc-references)

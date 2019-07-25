@@ -110,3 +110,9 @@ endif
 " tabs
 nnoremap <C-w>tl :tabmove +1<CR>
 nnoremap <C-w>th :tabmove -1<CR>
+
+" select inside slash /<some data to select>/
+onoremap <silent> i/ :<C-U>normal! T/vt/<CR> " inside /
+onoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
+xnoremap <silent> i/ :<C-U>normal! T/vt/h<CR> " inside /
+xnoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
