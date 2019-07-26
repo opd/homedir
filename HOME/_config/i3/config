@@ -198,6 +198,8 @@ bar {
         status_command py3status -c ~/.py3status.conf
         tray_output primary
 }
+# Need set primary display before
+# xrandr --output <output> --primary
 
 exec --no-startup-id "setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle"
 
