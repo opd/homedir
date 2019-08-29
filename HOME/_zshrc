@@ -18,6 +18,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Projects
 export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 #source /usr/local/bin/virtualenvwrapper_lazy.sh
+export CDPATH=.:$HOME/Projects:
 
 ## virtualenvwrapper (workon and so on)
 #export WORKON_HOME=$HOME/.virtualenvs
@@ -75,7 +76,7 @@ ZSH_THEME="my"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git mercurial vi-mode common-aliases virtualenvwrapper)
+plugins=(git command-not-found mercurial vi-mode common-aliases virtualenvwrapper web-search)
 export EDITOR="vim -X -u ~/.vimrc_noplugin";
 KEYTIMEOUT=1
 alias vim=vim
