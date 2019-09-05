@@ -350,7 +350,7 @@ Plug 'peitalin/vim-jsx-typescript'
 " Syntax highlight
 " cfg_vue
 Plug 'posva/vim-vue'
-Plug 'Quramy/tsuquyomi-vue'
+" Plug 'Quramy/tsuquyomi-vue'
 
 
 " }}}
