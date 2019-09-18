@@ -23,3 +23,5 @@ fi
 PATH="$HOME/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
 setxkbmap -option caps:ctrl_modifier
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
+
+export PATH="$HOME/.poetry/bin:$PATH"
