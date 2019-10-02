@@ -175,7 +175,10 @@ def get_code_line(code_line, search_pattern, space):
 
 
 def format_search_pattern(s):
-    return s.replace('(', '\(')
+    # TODO fix
+    s = s.replace('(', '\(')
+    s = s.replace(')', '\)')
+    return s
 
 
 def format_file_name(s):
@@ -375,6 +378,7 @@ def main():
     grep_patterns = []
     file_name = ''
 
+
     for pattern in FILE_EXTENSIONS:
         if isinstance(pattern, str):
             arr = [pattern]
@@ -443,6 +447,9 @@ def main():
     additional_words = []
 
     search_pattern = params.search_pattern
+    # print(search_pattern)
+    # for s in search_pattern:
+    #     print(s)
     if '@' in search_pattern:
         additional_words = search_pattern.split('@')
         search_pattern = additional_words.pop(0)
