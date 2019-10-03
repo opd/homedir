@@ -10,3 +10,8 @@ Restart Network Manager
 `sudo service network-manager restart`
 
 HomeDir/setup.sh
+
+#
+# Add string to 
+/etc/sysctl.d/99-sysctl.conf
+kernel.sysrq=1

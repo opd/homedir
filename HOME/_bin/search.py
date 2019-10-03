@@ -48,6 +48,15 @@ def convert_to_relative_path(lines, project_path, current_dir):
         yield os.path.relpath(line, current_dir)
 
 
+def remove_duplications(lines):
+    s = set([])
+    for line in lines:
+        if line in s:
+            continue
+        s.add(line)
+        yield line
+
+
 def write_file_list(
     tempfile,
     path,
@@ -109,6 +118,7 @@ def write_file_list(
     for pattern in grep_patterns:
         func = get_regex_filter(pattern)
         lines = filter(func, lines)
+    lines = remove_duplications(lines)
 
     lines = convert_to_relative_path(lines, project_path, current_dir)
 
@@ -165,7 +175,10 @@ def get_code_line(code_line, search_pattern, space):
 
 
 def format_search_pattern(s):
-    return s.replace('(', '\(')
+    # TODO fix
+    s = s.replace('(', '\(')
+    s = s.replace(')', '\)')
+    return s
 
 
 def format_file_name(s):
@@ -365,6 +378,7 @@ def main():
     grep_patterns = []
     file_name = ''
 
+
     for pattern in FILE_EXTENSIONS:
         if isinstance(pattern, str):
             arr = [pattern]
@@ -433,6 +447,9 @@ def main():
     additional_words = []
 
     search_pattern = params.search_pattern
+    # print(search_pattern)
+    # for s in search_pattern:
+    #     print(s)
     if '@' in search_pattern:
         additional_words = search_pattern.split('@')
         search_pattern = additional_words.pop(0)

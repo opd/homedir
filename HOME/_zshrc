@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=$HOME/.oh-my-zsh
+export ZSH=$HOME/.oh-my-zsh
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -18,11 +18,7 @@ export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Projects
 export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 #source /usr/local/bin/virtualenvwrapper_lazy.sh
-
-## virtualenvwrapper (workon and so on)
-#export WORKON_HOME=$HOME/.virtualenvs
-#export PROJECT_HOME=$HOME/Projects
-#source $HOME/.local/bin/virtualenvwrapper.sh
+export CDPATH=.:$HOME/Projects:
 
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -75,8 +71,9 @@ ZSH_THEME="my"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git mercurial vi-mode common-aliases virtualenvwrapper)
+plugins=(git command-not-found mercurial vi-mode common-aliases virtualenvwrapper web-search)
 export EDITOR="vim -X -u ~/.vimrc_noplugin";
+export MANPAGER="sh -c 'col -b | bat -l man -p'"
 KEYTIMEOUT=1
 alias vim=vim
 #Force tmux to assume the terminal supports 256 colours
@@ -127,6 +124,8 @@ dao () {
 }
 
 alias dap="django-admin shell_plus"
+alias dapp="django-admin shell_plus --print-sql"
+alias daf="django-admin set_fake_passwords --password 123"
 alias dar="django-admin runserver"
 alias daro="django-admin runserver 0.0.0.0:8000"
 alias dar1="django-admin runserver localhost:8001"

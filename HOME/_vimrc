@@ -1,20 +1,9 @@
 " vim: foldmethod=marker:foldlevel=0
 "
 set nocompatible
-if has('nvim')
-    if empty(glob('~/.config/nvim/autoload/plug.vim'))
-        silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
-            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    endif
-    call plug#begin('~/.config/nvim/plugged')
-else
-    call plug#begin('~/.vim/plugged')
-endif
 
 " PLUGINS {{{
 " PLUG SETTINGS {{{
-if exists('g:loaded_plug')
 if has('nvim')
     if empty(glob('~/.config/nvim/autoload/plug.vim'))
         silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -25,6 +14,7 @@ if has('nvim')
 else
     call plug#begin('~/.vim/plugged')
 endif
+if exists('g:loaded_plug')
 " }}}
 "    ___  ___                                    _
 "    |  \/  |                                   | |
@@ -40,6 +30,7 @@ endif
 " vi{prefix}w
 " cfg_wordmotion
 Plug 'chaoren/vim-wordmotion'
+" Brings physics-based smooth scrolling to the Vim/Neovim world!
 " cfg_comfortablemotion
 Plug 'yuttie/comfortable-motion.vim'
 
@@ -77,6 +68,7 @@ Plug 'easymotion/vim-easymotion'
 ""   -----------|-----------
 ""   {("<C-G>g  |  {("")}|
 " Plug 'Raimondi/delimitMate'
+" ^q ] - for inserting brace. (Standard vim)
 Plug 'jiangmiao/auto-pairs'
 
 "" :StripWhitespace - remove whitespaces
@@ -99,6 +91,7 @@ Plug 'vim-scripts/vis'
 Plug 'tpope/vim-surround'
 
 " adjusts 'shiftwidth' and 'expandtab' from current file
+" :Sleuth Manually detect indentation
 Plug 'tpope/vim-sleuth'
 " crs snake_case
 " crm MixedCase
@@ -119,6 +112,7 @@ Plug 'AndrewRadev/splitjoin.vim'
 
 " switch True <=> False and etc.
 " '-' - to switch
+" cfg_switch
 Plug 'AndrewRadev/switch.vim'
 
 
@@ -133,7 +127,6 @@ Plug 'fadein/vim-FIGlet'
 " additions to `ga` (character representation)
 Plug 'tpope/vim-characterize'
 
-
 " emoji
 " C-X C-E
 Plug 'kyuhi/vim-emoji-complete'
@@ -143,10 +136,12 @@ Plug 'kyuhi/vim-emoji-complete'
 " Select rectangle then press '+O','+>','++>'
 Plug 'gyim/vim-boxdraw'
 
+" :UndotreeToggle
 Plug 'mbbill/undotree'
 
 " \p, \P  next, prev
 " vmap S conflict with vim surround
+" cfg_yankstack
 " Plug 'maxbrunsfeld/vim-yankstack'
 
 
@@ -273,6 +268,9 @@ Plug 'ap/vim-css-color', {'for': ['css', 'sass', 'scss', 'less', 'ts']}
 " ALL {{{
 "
 " comments, commenter
+" Language Server Client
+" :CocInstall coc-python, coc-tsserver
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " cfg_caw
 Plug 'tyru/caw.vim'
 " check context file type for comments
@@ -334,31 +332,32 @@ Plug 'majutsushi/tagbar'
 " Plug 'ambv/black'
 " }}}
 " TYPESCRIPT {{{
-Plug 'leafgarland/typescript-vim'
+" Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 " SETTINGS in typescript.vim
 " Make your Vim a TypeScript IDE
 " cfg_tsuquyomi
-Plug 'Quramy/tsuquyomi'
+" Plug 'Quramy/tsuquyomi'
 "
-if has('nvim')
-  Plug 'HerringtonDarkholme/yats.vim'
-  Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-  " For Denite features
-  Plug 'Shougo/denite.nvim'
-endif
+" if has('nvim')
+"   Plug 'HerringtonDarkholme/yats.vim'
+"   Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+"   " For Denite features
+"   Plug 'Shougo/denite.nvim'
+" endif
 " }}}
 " VUEJS {{{
 " Syntax highlight
 " cfg_vue
 Plug 'posva/vim-vue'
-Plug 'Quramy/tsuquyomi-vue'
+" Plug 'Quramy/tsuquyomi-vue'
 
 
 " }}}
 " JAVASCRIPT {{{
 "" JAVASCRIPT
 "" Plug 'wokalski/autocomplete-flow'
+Plug 'pangloss/vim-javascript'
 " jsx
 " cfg_vimjsx
 Plug 'mxw/vim-jsx'
@@ -652,3 +651,16 @@ let g:user_emmet_settings = {
 \      'extends' : 'jsx',
 \  },
 \}
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gu <Plug>(coc-references)
+
+" cfg_switch
+let g:switch_custom_definitions =
+    \ [
+    \   ['!==', '===']
+    \ ]
+
+" cfg_yankstack
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
