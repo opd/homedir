@@ -123,6 +123,10 @@ dao () {
   docker-compose exec django bash -c "pipenv run django-admin $@"
 }
 
+
+# Python
+alias clear-pyc='find . -name "*.pyc" -exec rm -f {} \;'
+# Django
 alias dap="django-admin shell_plus"
 alias dapp="django-admin shell_plus --print-sql"
 alias daf="django-admin set_fake_passwords --password 123"
@@ -138,7 +142,6 @@ alias dar7="django-admin runserver localhost:8007"
 alias dar8="django-admin runserver localhost:8008"
 alias dar9="django-admin runserver localhost:8009"
 
-
 alias dop="docker-compose exec django bash -c \"pipenv run django-admin shell_plus\""
 alias dor="docker-compose exec django bash -c \"pipenv run django-admin runserver\""
 alias do1="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8001\""
@@ -151,11 +154,12 @@ alias do7="docker-compose exec django bash -c \"pipenv run django-admin runserve
 alias do8="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8008\""
 alias do9="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8009\""
 
-
+# git TODO use .gitconfig instead of aliases
 alias githist="git log --graph"
 alias gitoutgoing="git fetch origin && git log origin/\`git symbolic-ref --short HEAD\`..\`git symbolic-ref --short HEAD\`"
 alias gitdiff="git diff HEAD"
 alias gitcommit="git add -u; git commit"
+
 # Aliases conflicts with zshrc plugins
 # alias hgroot="cd `hg root`"
 # alias gitroot="cd `git root`"
