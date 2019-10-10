@@ -357,6 +357,7 @@ def main():
     parser.add_argument('--cur-dir', dest='cur_dir', action='store_true')
     parser.add_argument('--cp', dest='ctrlp')
     parser.add_argument('--pc', dest='path_contains')
+    parser.add_argument('--exclude', dest='exclude')
     parser.add_argument('--debug', nargs='*')
 
     file_extensions = []
@@ -516,6 +517,12 @@ def main():
     if params.count:
         lines = only_count_per_file(lines)
     lines = filter_count(lines, LIMIT)
+
+    exclude = params.exclude
+    if exclude:
+        lines = (
+            line for line in lines if exclude not in line[3]
+        )
 
     for file_name, line, column, code_line in lines:
         print_line(file_name, line, column, code_line,
