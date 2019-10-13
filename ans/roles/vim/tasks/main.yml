@@ -1,0 +1,20 @@
+---
+- name: install tmux
+  become: yes
+  apt:
+    name: tmux
+  vars:
+    packages:
+    - tmux
+    - vim
+    - vim-nox
+    - vim-gtk
+    - flake8
+    - pylint
+    - ack-grep
+- name: Neovim
+  pip:
+    name: neovim
+  pip:
+    name: neovim
+    executable: pip3

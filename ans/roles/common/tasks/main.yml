@@ -1,0 +1,10 @@
+---
+- name: Install common
+  become: yes
+  apt:
+    name: common
+  vars:
+    packages:
+      - git
+      - url
+      - tmux
