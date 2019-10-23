@@ -1,1 +1,13 @@
-dropbox
+# Changes that have to do
+change grub timeout
+
+/* sudo pip install python-vim  */
+/* sudo pip3 install python-vim */
+
+sudo pip3 install pynvim
+
+# nerd-fonts.. download-clone then..
+./install.sh
+# set font for terminal
+
+install ifconfig

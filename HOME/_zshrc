@@ -16,7 +16,7 @@ eval "$(direnv hook zsh)"
 # VIRTUALENVWRAPPER
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Projects
-export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper_lazy.sh
 #source /usr/local/bin/virtualenvwrapper_lazy.sh
 export CDPATH=.:$HOME/Projects:
 
@@ -71,7 +71,7 @@ ZSH_THEME="my"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git command-not-found mercurial vi-mode common-aliases virtualenvwrapper web-search)
+plugins=(git vi-mode common-aliases virtualenvwrapper web-search)
 export EDITOR="vim -X -u ~/.vimrc_noplugin";
 export MANPAGER="sh -c 'col -b | bat -l man -p'"
 KEYTIMEOUT=1
