@@ -10,4 +10,11 @@ sudo pip3 install pynvim
 ./install.sh
 # set font for terminal
 
-install ifconfig
+install ifconfig (net-tools)
+
+##
+setup ssh for bitbucket
+https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html
+
+Install
+tor, telegram

@@ -17,6 +17,7 @@ imap jj <Esc>
 imap jk <Esc>
 
 "" highlight line and column
+set scrolloff=5
 set cursorline
 set colorcolumn=80
 """ SLOWDOWN!!!
@@ -88,6 +89,8 @@ else
 endif
 set directory=~/.vim/swapfiles//
 
+set backupdir=~/.vim/tmp//,.
+
 set modeline
 set modelines=5
 
@@ -116,3 +119,5 @@ onoremap <silent> i/ :<C-U>normal! T/vt/<CR> " inside /
 onoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
 xnoremap <silent> i/ :<C-U>normal! T/vt/h<CR> " inside /
 xnoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
+
+set shell=/usr/bin/zsh

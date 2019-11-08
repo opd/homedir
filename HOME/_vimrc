@@ -568,6 +568,9 @@ cnoreabbrev Agu Ack -G \/urls.py<C-b><Right><Right><Right>
 cnoreabbrev Agt Ack -G \/test_<C-b><Right><Right><Right>
 cnoreabbrev Agf Ack -G \/factories.py<C-b><Right><Right><Right>
 cnoreabbrev Agcm Ack class\ -w -G \/models.py<C-b><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right>
+
+cnoreabbrev das !django-admin show_urls \| grep
+
 let g:ackhighlight = 1
 let g:ack_use_dispatch = 1
 " idk
@@ -638,6 +641,7 @@ let g:LanguageClient_serverCommands = {
 autocmd FileType * call LC_maps()
 
 " cfg_ultisnips
+let g:UltiSnipsExpandTrigger="<c-b>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
