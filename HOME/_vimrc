@@ -115,6 +115,10 @@ Plug 'AndrewRadev/splitjoin.vim'
 " cfg_switch
 Plug 'AndrewRadev/switch.vim'
 
+" Move item under the cursor left or right
+" cfg_sideways
+Plug 'AndrewRadev/sideways.vim'
+
 
 " Press <C-G>c in insert mode to toggle a temporary software caps lock, or gC in normal mode
 " cfg_capslock
@@ -668,3 +672,7 @@ let g:switch_custom_definitions =
 " cfg_yankstack
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
+
+" cfg_sideways
+nnoremap <leader><c-h> :SidewaysLeft<cr>
+nnoremap <leader><c-l> :SidewaysRight<cr>
