@@ -29,4 +29,7 @@
     "coc.preferences.hoverTarget": "echo",
     "signature.target": "echo",
     "suggest.floatEnable": true,
+    // Add to fix strange bug "Update imports on file move ? some/file.ts~"
+    "typescript.updateImportsOnFileMove.enable": false,
+    "javascript.updateImportsOnFileMove.enable": false,
 }
