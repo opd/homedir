@@ -121,6 +121,7 @@ xnoremap <silent> i/ :<C-U>normal! T/vt/h<CR> " inside /
 xnoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
 
 set shell=/usr/bin/zsh
+" Make shell interactive and load config from .zshrc
 
 " Swap selection and last swaps deleted
 vnoremap <C-X> <Esc>`.``gvP``P

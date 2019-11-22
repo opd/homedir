@@ -161,10 +161,10 @@ Plug 'opd/vcsurl.vim'
 "" GIT
 "" git wrapper
 Plug 'tpope/vim-fugitive'
-"Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " for mercurial & git. show changes
 " ]c / [c - next-change, previous-change
- Plug 'sgur/vim-lazygutter'
+" Plug 'sgur/vim-lazygutter'
 "" mercurial wrapper
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'phleet/vim-mercenary'
@@ -311,6 +311,8 @@ Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 " Find and Replace
 Plug 'brooth/far.vim'
+
+Plug 'direnv/direnv.vim'
 
 
 " COMPLETION
@@ -525,6 +527,7 @@ let g:jedi#show_call_signatures = 0
 let g:ale_linters = {
    \ 'python': ['flake8'],
    \ 'typescript': ['tslint', 'tsserver'],
+   \ 'javascript': ['eslint'],
    \}
 let g:airline#extensions#ale#enabled = 1
 nmap ]e <Plug>(ale_next_wrap)

@@ -77,7 +77,6 @@ export MANPAGER="sh -c 'col -b | bat -l man -p'"
 KEYTIMEOUT=1
 alias vim=vim
 #Force tmux to assume the terminal supports 256 colours
-#alias tmux=tmux -2
 #export TERM="xterm-256color"
 if [ "$TMUX" = "" ]; then tmux -2; fi
 
@@ -123,6 +122,8 @@ dao () {
   docker-compose exec django bash -c "pipenv run django-admin $@"
 }
 
+# TODO move aliases to .zshenv
+#
 alias dap="django-admin shell_plus"
 alias dapp="django-admin shell_plus --print-sql"
 alias daf="django-admin set_fake_passwords --password 123"
@@ -152,12 +153,7 @@ alias do8="docker-compose exec django bash -c \"pipenv run django-admin runserve
 alias do9="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8009\""
 
 
-alias githist="git log --graph"
-alias gitoutgoing="git fetch origin && git log origin/\`git symbolic-ref --short HEAD\`..\`git symbolic-ref --short HEAD\`"
 alias gitdiff="git diff HEAD"
 alias gitcommit="git add -u; git commit"
-# Aliases conflicts with zshrc plugins
-# alias hgroot="cd `hg root`"
-# alias gitroot="cd `git root`"
 
 [[ -s "/etc/bash_completion.d/virtualenvwrapper" ]] && source "/etc/bash_completion.d/virtualenvwrapper"
