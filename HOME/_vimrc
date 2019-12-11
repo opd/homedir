@@ -497,7 +497,7 @@ let g:ctrlp_show_hidden = 1
 
 let g:ctrlp_user_command = {
     \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files | grep -v __generated__'],
+        \ 1: ['.git', 'cd %s && { git ls-files; git ls-files . --exclude-standard --others; } | grep -v __generated__'],
         \ 2: ['.hg', 'hg --cwd %s locate -I . | grep -v __generated__'],
         \ },
     \ 'fallback': 'find %s -type f'
