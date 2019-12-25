@@ -13,6 +13,12 @@ eval "$(pyenv virtualenv-init -)"
 #DIRENV
 eval "$(direnv hook zsh)"
 
+
+# Node version manager
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # VIRTUALENVWRAPPER
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Projects
