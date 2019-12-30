@@ -129,7 +129,10 @@ dao () {
 }
 
 # TODO move aliases to .zshenv
-#
+alias dl="direnv allow"
+alias ys="yarn start"
+alias dr="django-admin runserver"
+
 alias dap="django-admin shell_plus"
 alias dapp="django-admin shell_plus --print-sql"
 alias daf="django-admin set_fake_passwords --password 123"
@@ -144,7 +147,6 @@ alias dar6="django-admin runserver localhost:8006"
 alias dar7="django-admin runserver localhost:8007"
 alias dar8="django-admin runserver localhost:8008"
 alias dar9="django-admin runserver localhost:8009"
-
 
 alias dop="docker-compose exec django bash -c \"pipenv run django-admin shell_plus\""
 alias dor="docker-compose exec django bash -c \"pipenv run django-admin runserver\""

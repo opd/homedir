@@ -125,3 +125,6 @@ set shell=/usr/bin/zsh
 
 " Swap selection and last swaps deleted
 vnoremap <C-X> <Esc>`.``gvP``P
+
+" Timeout between keyboard sequences
+set timeoutlen=200

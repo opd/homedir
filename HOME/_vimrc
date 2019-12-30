@@ -680,3 +680,9 @@ nmap <leader>P <Plug>yankstack_substitute_newer_paste
 " cfg_sideways
 nnoremap <leader><c-h> :SidewaysLeft<cr>
 nnoremap <leader><c-l> :SidewaysRight<cr>
+
+" I go hard
+nnoremap jj <nop>
+nnoremap kk <nop>
+nnoremap hh <nop>
+nnoremap ll <nop>
