@@ -13,10 +13,16 @@ eval "$(pyenv virtualenv-init -)"
 #DIRENV
 eval "$(direnv hook zsh)"
 
+
+# Node version manager
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # VIRTUALENVWRAPPER
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Projects
-export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper_lazy.sh
 #source /usr/local/bin/virtualenvwrapper_lazy.sh
 export CDPATH=.:$HOME/Projects:
 
@@ -71,13 +77,12 @@ ZSH_THEME="my"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git command-not-found mercurial vi-mode common-aliases virtualenvwrapper web-search)
-export EDITOR="vim -X -u ~/.vimrc_noplugin";
+plugins=(git vi-mode common-aliases virtualenvwrapper web-search)
+export EDITOR="vim";
 export MANPAGER="sh -c 'col -b | bat -l man -p'"
 KEYTIMEOUT=1
 alias vim=vim
 #Force tmux to assume the terminal supports 256 colours
-#alias tmux=tmux -2
 #export TERM="xterm-256color"
 if [ "$TMUX" = "" ]; then tmux -2; fi
 
@@ -123,10 +128,11 @@ dao () {
   docker-compose exec django bash -c "pipenv run django-admin $@"
 }
 
+# TODO move aliases to .zshenv
+alias dl="direnv allow"
+alias ys="yarn start"
+alias dr="django-admin runserver"
 
-# Python
-alias clear-pyc='find . -name "*.pyc" -exec rm -f {} \;'
-# Django
 alias dap="django-admin shell_plus"
 alias dapp="django-admin shell_plus --print-sql"
 alias daf="django-admin set_fake_passwords --password 123"
@@ -154,14 +160,8 @@ alias do7="docker-compose exec django bash -c \"pipenv run django-admin runserve
 alias do8="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8008\""
 alias do9="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8009\""
 
-# git TODO use .gitconfig instead of aliases
-alias githist="git log --graph"
-alias gitoutgoing="git fetch origin && git log origin/\`git symbolic-ref --short HEAD\`..\`git symbolic-ref --short HEAD\`"
+
 alias gitdiff="git diff HEAD"
 alias gitcommit="git add -u; git commit"
-
-# Aliases conflicts with zshrc plugins
-# alias hgroot="cd `hg root`"
-# alias gitroot="cd `git root`"
 
 [[ -s "/etc/bash_completion.d/virtualenvwrapper" ]] && source "/etc/bash_completion.d/virtualenvwrapper"

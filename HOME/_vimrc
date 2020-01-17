@@ -115,6 +115,10 @@ Plug 'AndrewRadev/splitjoin.vim'
 " cfg_switch
 Plug 'AndrewRadev/switch.vim'
 
+" Move item under the cursor left or right
+" cfg_sideways
+Plug 'AndrewRadev/sideways.vim'
+
 
 " Press <C-G>c in insert mode to toggle a temporary software caps lock, or gC in normal mode
 " cfg_capslock
@@ -152,15 +156,15 @@ Plug 'mbbill/undotree'
 "      `888'    888   .o8 o.  )88b
 "       `8'     `Y8bod8P' 8""888P'
 " VCS {{{
-" cfg_vcsurl_vim
-Plug 'opd/vcsurl.vim'
+" cfg_myshitplugin
+Plug 'opd/myshitplugin.vim'
 "" GIT
 "" git wrapper
 Plug 'tpope/vim-fugitive'
-"Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 " for mercurial & git. show changes
 " ]c / [c - next-change, previous-change
- Plug 'sgur/vim-lazygutter'
+" Plug 'sgur/vim-lazygutter'
 "" mercurial wrapper
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'phleet/vim-mercenary'
@@ -178,6 +182,7 @@ Plug 'phleet/vim-mercenary'
 " HTML {{{
 "" HTML
 " Expand on Ctrl+Y,
+" cfg_emmet
 Plug 'mattn/emmet-vim'
 "" match tag. SLOWWWW DOWN
 " Plug 'gregsexton/MatchTag'
@@ -307,6 +312,8 @@ Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 " Find and Replace
 Plug 'brooth/far.vim'
+
+Plug 'direnv/direnv.vim'
 
 
 " COMPLETION
@@ -488,10 +495,11 @@ endif
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_show_hidden = 1
+let g:ctrlp_line_prefix = '' " 
 
 let g:ctrlp_user_command = {
     \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files | grep -v __generated__'],
+        \ 1: ['.git', 'cd %s && { git ls-files; git ls-files . --exclude-standard --others; } | grep -v __generated__'],
         \ 2: ['.hg', 'hg --cwd %s locate -I . | grep -v __generated__'],
         \ },
     \ 'fallback': 'find %s -type f'
@@ -521,6 +529,7 @@ let g:jedi#show_call_signatures = 0
 let g:ale_linters = {
    \ 'python': ['flake8'],
    \ 'typescript': ['tslint', 'tsserver'],
+   \ 'javascript': ['eslint'],
    \}
 let g:airline#extensions#ale#enabled = 1
 nmap ]e <Plug>(ale_next_wrap)
@@ -568,6 +577,9 @@ cnoreabbrev Agu Ack -G \/urls.py<C-b><Right><Right><Right>
 cnoreabbrev Agt Ack -G \/test_<C-b><Right><Right><Right>
 cnoreabbrev Agf Ack -G \/factories.py<C-b><Right><Right><Right>
 cnoreabbrev Agcm Ack class\ -w -G \/models.py<C-b><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right>
+
+cnoreabbrev das !django-admin show_urls \| grep
+
 let g:ackhighlight = 1
 let g:ack_use_dispatch = 1
 " idk
@@ -593,7 +605,7 @@ let g:vue_disable_pre_processors=1
 " Html
 vmap ,x :!tidy -q -i --show-errors 0 -xml<CR>
 
-" cfg_vcsurl_vim
+" cfg_myshitplugin
 nmap <leader>bb :GetVCSLineUrl<CR>
 
 let g:vcsurl_register = '+'
@@ -638,6 +650,7 @@ let g:LanguageClient_serverCommands = {
 autocmd FileType * call LC_maps()
 
 " cfg_ultisnips
+let g:UltiSnipsExpandTrigger="<c-b>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
@@ -664,3 +677,16 @@ let g:switch_custom_definitions =
 " cfg_yankstack
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
+
+" cfg_sideways
+nnoremap <leader><c-h> :SidewaysLeft<cr>
+nnoremap <leader><c-l> :SidewaysRight<cr>
+
+" I go hard
+nnoremap jj <nop>
+nnoremap kk <nop>
+nnoremap hh <nop>
+nnoremap ll <nop>
+
+" cfg_emmet
+" let g:user_emmet_leader_key = '<C-d>'

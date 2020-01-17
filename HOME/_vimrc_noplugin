@@ -17,6 +17,7 @@ imap jj <Esc>
 imap jk <Esc>
 
 "" highlight line and column
+set scrolloff=5
 set cursorline
 set colorcolumn=80
 """ SLOWDOWN!!!
@@ -62,7 +63,7 @@ inoremap <C-s> <Esc>l:w<CR>i
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 "" key map for paste
-inoremap <C-v> <Esc>"+pi
+" inoremap <C-v> <Esc>"+pi
 
 " Copy filename to clipboard
 " name only
@@ -87,6 +88,8 @@ else
     set viminfo='10,\"100,:20,%,n~/.viminfo'
 endif
 set directory=~/.vim/swapfiles//
+
+set backupdir=~/.vim/tmp//,.
 
 set modeline
 set modelines=5
@@ -116,3 +119,12 @@ onoremap <silent> i/ :<C-U>normal! T/vt/<CR> " inside /
 onoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
 xnoremap <silent> i/ :<C-U>normal! T/vt/h<CR> " inside /
 xnoremap <silent> a/ :<C-U>normal! F/vf/<CR> " around /
+
+set shell=/usr/bin/zsh
+" Make shell interactive and load config from .zshrc
+
+" Swap selection and last swaps deleted
+vnoremap <C-X> <Esc>`.``gvP``P
+
+" Timeout between keyboard sequences
+set timeoutlen=200

@@ -1,0 +1,3 @@
+# .zshenv is sourced on all invocations of the shell
+# And this aliases can be used in vim: :!da show_urls
+alias da=django-admin
