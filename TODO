@@ -1,6 +1,14 @@
 # Changes that have to do
 change grub timeout
 
+1) add user to sudoers
+2) Download tor
+3) Download telegram
+4) Able to use without any installation. (bash support)
+5) Bash + tmux
+6) Link folders to folder, (move downloads)
+7) Nvm
+
 /* sudo pip install python-vim  */
 /* sudo pip3 install python-vim */
 
