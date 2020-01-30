@@ -5,6 +5,7 @@ import operator as op
 import os
 import re
 import subprocess
+import shlex
 import sys
 import tempfile
 
@@ -19,8 +20,30 @@ EXTENSION_BLACK_LIST = [
 ]
 
 
+def split_path(path):
+    path = os.path.normpath(path)
+    return path.split(os.sep)
+
+
 def get_project_dir_and_vcs():
     orig_path = project_path = os.getcwd()
+    path_dirs = split_path(orig_path)
+    path_dirs[0] = '/'
+    if 'node_modules' in path_dirs:
+        index = path_dirs.index('node_modules')
+        dirs = path_dirs[:index + 2]
+        path = os.path.join(*dirs)
+        return path, 'js', orig_path
+    if 'site-packages' in path_dirs:
+        index = path_dirs.index('site-packages')
+        if (
+            index > 2
+            and path_dirs[index - 1].startswith("python")
+            and path_dirs[index - 2] == "lib"
+        ):
+            dirs = path_dirs[: index + 2]
+            path = os.path.join(*dirs)
+            return path, "py", orig_path
     while True:
         for svn, folder in [('hg', '.hg'), ('git', '.git')]:
             path = os.path.join(project_path, folder)
@@ -79,12 +102,21 @@ def write_file_list(
             "git ls-tree --full-tree -r --name-only HEAD",
             "git --no-pager diff --cached --name-only",
         ]
+    elif vcs_name == "js":
+        shell_cmds = [
+            r"find {0} -iregex '.*\.\(js\|ts\|scss\)'".format(path)
+        ]
+    elif vcs_name == "py":
+        shell_cmds = [
+            r"find {0} -iregex '.*\.\(py\)'".format(path)
+        ]
     else:
         raise NotImplementedError
 
     lines = []
     for shell_cmd in shell_cmds:
-        command = shell_cmd.split(' ')
+        # command = shell_cmd.split(' ')
+        command = shlex.split(shell_cmd)
         kwargs = {
             "stdout": subprocess.PIPE,
             "stderr": subprocess.DEVNULL,
@@ -94,6 +126,10 @@ def write_file_list(
         if vcs_name == 'hg':
             output_lines = map(op.itemgetter(slice(2, None)), output_lines)
         lines = itertools.chain(output_lines, lines)
+
+    if vcs_name in ('py', 'js'):
+        prefix_len = len(project_path)
+        lines = map(lambda x: x[prefix_len + 1:], lines)
 
     lines = map(lambda x: x.decode("utf-8", "replace"), lines)
     if current_dir_only:
@@ -176,8 +212,8 @@ def get_code_line(code_line, search_pattern, space):
 
 def format_search_pattern(s):
     # TODO fix
-    s = s.replace('(', '\(')
-    s = s.replace(')', '\)')
+    s = s.replace('(', r'\(')
+    s = s.replace(')', r'\)')
     return s
 
 
@@ -221,7 +257,7 @@ def iterate_output(lines):
 
 
 def remove_extra_spaces(lines):
-    replace_spaces_pattern = re.compile('\s+')
+    replace_spaces_pattern = re.compile(r'\s+')
     for item in lines:
         file_name, row, col, code_line = item
         code_line = replace_spaces_pattern.sub(' ', code_line)
@@ -379,7 +415,6 @@ def main():
     grep_patterns = []
     file_name = ''
 
-
     for pattern in FILE_EXTENSIONS:
         if isinstance(pattern, str):
             arr = [pattern]
@@ -395,15 +430,15 @@ def main():
                 ignore_file_extensions.extend(exclude_arr)
 
     if params.migrations:
-        grep_patterns.append('.*\/[0-9]{4}[^/]+[.]py$')
+        grep_patterns.append(r'.*\/[0-9]{4}[^/]+[.]py$')
     if params.urls:
-        file_name = '.*\/urls[.]py'
+        file_name = r'.*\/urls[.]py'
         grep_patterns.append(file_name)
     if params.views:
-        file_name = '.*\/views[.]py'
+        file_name = r'.*\/views[.]py'
         grep_patterns.append(file_name)
     if params.models:
-        file_name = '.*\/models[.]py'
+        file_name = r'.*\/models[.]py'
         grep_patterns.append(file_name)
 
     path, vcs_name, current_dir = get_project_dir_and_vcs()
@@ -457,15 +492,15 @@ def main():
     initial_search_pattern = search_pattern
     search_pattern = format_search_pattern(search_pattern)
     if params.class_:
-        search_pattern = '^\s*class\s+' + search_pattern
+        search_pattern = r'^\s*class\s+' + search_pattern
         if params.word:
             whole_word = False
-            search_pattern += '\s*\('
+            search_pattern += r'\s*\('
     if params.def_:
-        search_pattern = '^\s*def\s+' + search_pattern
+        search_pattern = r'^\s*def\s+' + search_pattern
         if params.word:
             whole_word = False
-            search_pattern += '\s*\('
+            search_pattern += r'\s*\('
     if whole_word:
         command += ' -w'
 
