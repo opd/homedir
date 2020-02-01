@@ -27,6 +27,7 @@ vim +PlugInstall +qall!
 # это должно быть в последнюю очередь!!
 # zsh and etc
 sudo apt install -y zsh tmux direnv
+sudo chsh -s /usr/bin/zsh
 rm -rf ~/.oh-my-zsh
 # install oh my zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"

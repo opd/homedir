@@ -1,8 +1,9 @@
+#!/bin/bash
 cd HOME
 set -e
 
 
-if ["$1" == "-y"]; then
+if [ "$1" == "-y" ]; then
     response=y
 else
     read -r -p "Are you sure? [y/N] " response
