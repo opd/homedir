@@ -1,17 +1,7 @@
 # HomeDir
 sudo apt-get install git
 
-git clone https://github.com/opd/HomeDir.git 
+sudo apt update
+sudo apt dist-upgrade -y
 
-Comment out the line `dns=dnsmask` in /etc/NetworkManager/NetworkManager.conf
-
-Restart Network Manager
-
-`sudo service network-manager restart`
-
-HomeDir/setup.sh
-
-#
-# Add string to 
-/etc/sysctl.d/99-sysctl.conf
-kernel.sysrq=1
+sudo apt install curl -y && curl -s https://raw.githubusercontent.com/opd/homedir/master/curl_script.sh | bash

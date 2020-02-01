@@ -30,3 +30,10 @@ https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html
 
 Install
 tor, telegram
+
+###
+Comment out the line `dns=dnsmask` in /etc/NetworkManager/NetworkManager.conf
+
+# Add string to 
+/etc/sysctl.d/99-sysctl.conf
+kernel.sysrq=1
