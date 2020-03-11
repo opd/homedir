@@ -2,16 +2,19 @@
 link Downloads and other dirs to dir on large disk..
 set gnome terminal font
 
+# Ubuntu preseed. Encrypt homedir
+
 # Changes that have to do
 change grub timeout
+
 
 1) add user to sudoers
 2) Download tor
 3) Download telegram
-4) Able to use without any installation. (bash support)
+4) Split installations. minimal. without zsh, without coc.vim
 5) Bash + tmux
 6) Link folders to folder, (move downloads)
-7) Nvm
+7) nvm
 
 /* sudo pip install python-vim  */
 /* sudo pip3 install python-vim */
@@ -37,3 +40,19 @@ Comment out the line `dns=dnsmask` in /etc/NetworkManager/NetworkManager.conf
 # Add string to 
 /etc/sysctl.d/99-sysctl.conf
 kernel.sysrq=1
+
+# issues
+#error tmux yank dependencies not installed
+to fix apt install xclip or xsel??
+
+dconf list /org/gnome/terminal/legacy/profiles:/
+
+dconf read /org/gnome/terminal/legacy/profiles:/list
+
+dconf write /org/gnome/terminal/legacy/profiles:/:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/visible-name "'coding'"
+dconf write /org/gnome/terminal/legacy/profiles:/list "['aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee']"
+dconf write /org/gnome/terminal/legacy/profiles:/:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/use-system-font false
+dconf write /org/gnome/terminal/legacy/profiles:/:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/font "'DroidSansMono Nerd Font 11'"
+
+
+dconf write /org/gnome/terminal/legacy/profiles:/:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/font "'Ubuntu Mono derivative Powerline 13'"

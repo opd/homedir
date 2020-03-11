@@ -75,7 +75,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'ntpeters/vim-better-whitespace'
 
 " Like sublime
-" Ctrl+n, Ctrl+p.
+" Ctrl+n, Ctrl+p. Ctrl+x (skip)
 Plug 'terryma/vim-multiple-cursors'
 " VIS
 "    Use V, v, or ctrl-v to visually mark some region.  Then use
