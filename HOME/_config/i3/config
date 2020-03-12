@@ -201,8 +201,10 @@ bar {
 # Need set primary display before
 # xrandr --output <output> --primary
 
-exec --no-startup-id "setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle"
-exec --no-startup-id "setxkbmap -option compose:ralt"
+# exec --no-startup-id "setxkbmap -model pc105 -layout us,ru -option grp:alt_shift_toggle"
+exec "setxkbmap -layout us,ru -option grp:alt_shift_toggle"
+# exec --no-startup-id "setxkbmap -option compose:ralt"
+exec "setxkbmap -option compose:ralt"
 
 exec "xrandr --output DVI-D-0 --mode 1920x1080"
 
