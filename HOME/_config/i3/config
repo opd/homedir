@@ -234,5 +234,7 @@ bindsym $mod+less focus output left
 
 # sleep 3; xdotool getactivewindow
 # xprop -id {number}
+# WM_CLASS(STRING)
 for_window [class="Keepassx"] floating enable
 for_window [class="Google-chrome"] floating enable
+for_window [class="Firefox"] floating enable
