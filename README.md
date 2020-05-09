@@ -1,4 +1,11 @@
 # HomeDir
+
+## TODO change branch
+
+```
+curl -L https://raw.githubusercontent.com/opd/homedir/install/install.sh | sh /dev/stdin
+```
+
 sudo apt-get install git
 
 sudo apt update
