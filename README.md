@@ -2,8 +2,10 @@
 
 ## TODO change branch
 
+TODO change curl to wget
+
 ```
-curl -L https://raw.githubusercontent.com/opd/homedir/install/install.sh | sh /dev/stdin
+wget -qO- https://raw.githubusercontent.com/opd/homedir/install/install.sh | sh /dev/stdin
 ```
 
 sudo apt-get install git
