@@ -21,5 +21,7 @@ curl -sfL https://direnv.net/install.sh | bash
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 pyenv update
 pyenv install 3.6.5
+sudo apt install -y pipenv
+# TODO install python2.7 install py2venv
 echo Run manually 'pyenv update'
 
