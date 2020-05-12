@@ -187,7 +187,8 @@ Plug 'mattn/emmet-vim'
 " Plug 'gregsexton/MatchTag'
 " }}}
 " MARKDOWN
-Plug 'plasticboy/vim-markdown'
+" cfg_markdown
+" Plug 'plasticboy/vim-markdown'
 " }}}
 
 " CtrlP(unite)
@@ -591,9 +592,6 @@ let g:ack_use_cword_for_empty_search = 1
 nmap <Leader>c<Space> <Plug>(caw:hatpos:toggle)
 vmap <Leader>c<Space> <Plug>(caw:hatpos:toggle)
 
-" vim-markdown
-let g:vim_markdown_conceal = 0
-
 " VUE.JS
 " fix  syntax highlighting stops working randomly
 " autocmd FileType vue syntax sync fromstart
@@ -686,3 +684,7 @@ nnoremap jj <nop>
 nnoremap kk <nop>
 nnoremap hh <nop>
 nnoremap ll <nop>
+
+" cfg_markdown
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0

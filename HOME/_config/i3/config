@@ -207,14 +207,15 @@ exec "setxkbmap -layout us,ru -option grp:alt_shift_toggle"
 exec "setxkbmap -option compose:ralt"
 
 exec "xrandr --output DVI-D-0 --mode 1920x1080"
+output DVI-D-0 res 1920x1080
 
 # VOLUME CONTROL
 # - decrease sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse set Master 5%-
-bindsym $mod + minus exec --no-startup-id amixer -D pulse set Master 5%-
+# bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse set Master 5%-
+# bindsym $mod + minus exec --no-startup-id amixer -D pulse set Master 5%-
 # =(+) increase sound
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse set Master 5%+
-bindsym $mod + plus exec --no-startup-id amixer -D pulse set Master 5%+
+# bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse set Master 5%+
+# bindsym $mod + plus exec --no-startup-id amixer -D pulse set Master 5%+
 # mute sound
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse set Master 1+ toggle
 
