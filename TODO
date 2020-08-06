@@ -37,7 +37,14 @@ tor, telegram
 ###
 Comment out the line `dns=dnsmask` in /etc/NetworkManager/NetworkManager.conf
 
-# Add string to 
+# Disable wayland
+uncomment WaylandEnable=false
+in /etc/gdm3/custom.conf
+# Set scaling for login screen
+https://askubuntu.com/questions/906797/scaling-gnome-login-screen-on-hidpi-display
+change /usr/share/glib-2.0/schemas/org.gnome.desktop.interface.gschema.xml solution
+
+# Enabling alt+prtscr+b for rebooot. Add string to
 /etc/sysctl.d/99-sysctl.conf
 kernel.sysrq=1
 
