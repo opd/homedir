@@ -1,0 +1,7 @@
+python
+1) Installation script. Install nodejs, python, ink, python deps
+2) Python scan scripts, get data for installation
+3) Ink select packages to install
+4) Pythnon create installations scripts and run
+get available packages form json
+use ink as gui

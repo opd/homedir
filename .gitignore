@@ -4,4 +4,5 @@ setup/*/*
 setup/the_silver_searcher
 setup/purple-discord
 env
-bin
+bin/installer-venv
+**/node_modules
