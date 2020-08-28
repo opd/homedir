@@ -1,14 +1,24 @@
-## NEOVIM
-set -e
-sudo add-apt-repository -y ppa:neovim-ppa/stable
-sudo apt-get update
-# sudo apt-get install -y python-dev python-pip python3-dev python3-pip curl
-sudo apt-get install -y neovim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+chmod u+x nvim.appimage
+mkdir -p ~/.bin
+mv ./nvim.appimage ~/.bin
 
-## vim-plug
-# curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+PYTHON2=2.7.18
+PYTHON3=3.8.2
 
+pyenv install -s $PYTHON2
+pyenv install -s $PYTHON3
 
-sudo pip3 install --upgrade neovim
-sudo pip2 install --upgrade neovim
-# sudo apt-get install -y exuberant-ctags
+pyenv virtualenv $PYTHON2 neovim2
+pyenv virtualenv $PYTHON3 neovim3
+
+pyenv activate neovim2
+pip install neovim
+pyenv activate neovim3
+pip install neovim
+
+# pyenv shell 2.7.18
+# pip install neovim
+# pyenv shell 3.8.2
+# pip install neovim
+
