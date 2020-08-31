@@ -1,3 +1,5 @@
+TODO юзать ansible не изобретать велосипед
+# https://medium.com/developer-space/parallel-playbook-execution-in-ansible-30799ccda4e0
 python
 1) Installation script. Install nodejs, python, ink, python deps
 2) Python scan scripts, get data for installation

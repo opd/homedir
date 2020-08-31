@@ -1,5 +1,6 @@
 pyenv:
   name: python
+  priority: high
   apt:
     - make
     - build-essential
