@@ -18,5 +18,5 @@ echo $PWD
 # python3 -m venv installer-venv
 source installer-venv/bin/activate
 # pip install -r requirements.txt
-
-python installer.py "$@"
+# python installer.py "$@"
+ansible-playbook ../setup/install.yml

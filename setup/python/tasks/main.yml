@@ -1,0 +1,29 @@
+- name: Install direnv
+  shell: curl -sfL https://direnv.net/install.sh | bash
+
+# - name: python
+#   apt:
+#     state: present
+#     pkg:
+#       - make
+#       - build-essential
+#       - libssl-dev
+#       - zlib1g-dev
+#       - libbz2-dev
+#       - libreadline-dev
+#       - libsqlite3-dev
+#       - wget
+#       - curl
+#       - llvm
+#       - libncurses5-dev
+#       - libncursesw5-dev
+#       - xz-utils tk-dev
+#       - pipenv
+#   script: |
+#     curl -sfL https://direnv.net/install.sh | bash
+#     curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
+#     pyenv update
+#     pyenv install 3.6.5
+#     sudo apt install -y pipenv
+#     # TODO install python2.7 install py2venv
+#     echo Run manually 'pyenv update'

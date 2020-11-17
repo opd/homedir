@@ -7,3 +7,6 @@ python
 4) Pythnon create installations scripts and run
 get available packages form json
 use ink as gui
+
+### TODO read
+https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html
