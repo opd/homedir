@@ -157,7 +157,9 @@ Plug 'mbbill/undotree'
 "       `8'     `Y8bod8P' 8""888P'
 " VCS {{{
 " cfg_myshitplugin
-Plug 'opd/myshitplugin.vim'
+if !has('nvim')
+  Plug 'opd/myshitplugin.vim'
+endif
 "" GIT
 "" git wrapper
 Plug 'tpope/vim-fugitive'
@@ -688,3 +690,9 @@ nnoremap ll <nop>
 " cfg_markdown
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
+
+
+if has('nvim')
+  let g:python_host_prog = "~/.pyenv/versions/neovim2/bin/python"
+  let g:python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"
+endif

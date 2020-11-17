@@ -116,6 +116,12 @@ if ! shopt -oq posix; then
   fi
 fi
 
+export PYENV_ROOT="$HOME/.pyenv"
+NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="$PYENV_ROOT/bin:$HOME/.yarn-global/bin:$NPM_PACKAGES/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
 # TODO make common for zsh and bash
 
 if ! [ -x "$(command -v vim)" ]; then
