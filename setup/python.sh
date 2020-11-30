@@ -1,15 +1,14 @@
 # for user
-sudo apt-get install -y python-pip python3-pip
-sudo pip install --upgrade pip
-sudo pip install setuptools
+set -e
+# sudo apt install -y python3-pip curl python-is-python3
+# curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+# python2 get-pip.py
+
+pip2 install setuptools
 sudo pip3 install --upgrade pip
 sudo pip3 install setuptools
-pip install --user virtualenvwrapper
-sudo pip2 install virtualenvwrapper
-# Ubuntu 16.04 python 3.6
-# sudo add-apt-repository -y ppa:jonathonf/python-3.6
-# sudo apt update
-# sudo apt install python3.6
+pip2 install --user virtualenvwrapper
+pip2 install virtualenvwrapper
 
 # for vim
 sudo apt install exuberant-ctags
