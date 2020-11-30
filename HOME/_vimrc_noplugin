@@ -12,6 +12,7 @@ set clipboard=unnamedplus
 " select recently pasted, don't work(
 " nnoremap gp `[v`]
 
+
 " Escape insert mode on jj
 imap jj <Esc>
 imap jk <Esc>
