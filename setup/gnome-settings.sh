@@ -1,4 +1,5 @@
 #!/bin/bash
+# TODO dump gnome settings and load
 
 # set terminal font
 dconf write /org/gnome/terminal/legacy/profiles:/:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/visible-name "'coding'"

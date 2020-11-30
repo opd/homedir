@@ -1,5 +1,14 @@
 #!/bin/bash
 
+DOWNLOAD_DIR="/tmp/"
+FNAME="telegram.tar.xz"
+
+curl -L https://telegram.org/dl/desktop/linux --output $DOWNLOAD_DIR$FNAME
+tar xf $DOWNLOAD_DIR$FNAME -C ~/Downloads/
+~/Downloads/Telegram/Telegram &
+
+exit 0
+# In case when tg blocked
 echo "Starting tor"
 ~/Downloads/tor-browser_en-US/Browser/start-tor-browser --detach
 # Start tor for proxy
@@ -12,9 +21,4 @@ while : ; do
    sleep 3
 done
 
-DOWNLOAD_DIR="/tmp/"
-FNAME="telegram.tar.xz"
-
 curl -L --socks5 localhost:9150 https://telegram.org/dl/desktop/linux --output $DOWNLOAD_DIR$FNAME
-tar xf $DOWNLOAD_DIR$FNAME -C ~/Downloads/
-~/Downloads/Telegram/Telegram &

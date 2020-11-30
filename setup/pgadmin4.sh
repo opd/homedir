@@ -1,3 +1,4 @@
+# TODO fix
 # Don't work properly, cannot connect server, maybe postgresql issue
 sudo apt install -y python3-dev python3-venv python-pip postgresql-common libpq-dev wget
 cd ~
