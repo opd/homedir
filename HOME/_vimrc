@@ -455,7 +455,7 @@ nmap <F8> :TagbarToggle<CR>
 " cfg_airline
 let g:airline_powerline_fonts = 1
 " let g:airline_theme = 'base16'
-let g:airline#extensions#tagbar#flags = 'f'
+" let g:airline#extensions#tagbar#flags = 'f'
 
 let g:airline_mode_map = {
       \ '__' : '-',
@@ -470,7 +470,8 @@ let g:airline_mode_map = {
       \ }
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 " Don't show file type
-let g:airline_section_x='%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}%{airline#util#prepend("", 0)}'
+" let g:airline_section_x='%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}%{airline#util#prepend("", 0)}'
+let g:airline_section_x='%{airline#util#prepend("", 0)}'
 " default..
 let g:airline_section_z='%3p%% %#__accent_bold#%{g:airline_symbols.linenr}%4l%#__restore#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__# :%3v'
 " modified, remove spaces

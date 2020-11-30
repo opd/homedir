@@ -16,12 +16,9 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# disable caps lock
-#setxkbmap -option caps:none
-
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
+# TODO check is working
+# Capslock to control
 setxkbmap -option caps:ctrl_modifier
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
-
-export PATH="$HOME/.poetry/bin:$PATH"

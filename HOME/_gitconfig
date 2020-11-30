@@ -26,4 +26,5 @@ pushupstream = !git push --set-upstream origin $(git symbolic-ref --short HEAD)
   tool = vimdiff
 [core]
   # https://github.com/dandavison/delta
-  pager = delta --theme='Monokai Extended' --keep-plus-minus-markers --24-bit-color="always"
+  # TODO use pager from environment variable
+  # pager = delta --theme='Monokai Extended' --keep-plus-minus-markers --24-bit-color="always"
