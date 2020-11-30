@@ -9,12 +9,12 @@
 #umask 022
 
 # if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
-fi
+# if [ -n "$BASH_VERSION" ]; then
+#     # include .bashrc if it exists
+#     if [ -f "$HOME/.bashrc" ]; then
+# 	. "$HOME/.bashrc"
+#     fi
+# fi
 
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
@@ -22,3 +22,75 @@ PATH="$HOME/bin:$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
 # Capslock to control
 setxkbmap -option caps:ctrl_modifier
 export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
+
+
+
+# Aliases
+alias dl="direnv allow"
+alias ys="yarn start"
+alias dr="django-admin runserver"
+
+alias dap="django-admin shell_plus"
+alias dapp="django-admin shell_plus --print-sql"
+alias daf="django-admin set_fake_passwords --password 123"
+alias dar="django-admin runserver"
+alias daro="django-admin runserver 0.0.0.0:8000"
+alias dar1="django-admin runserver localhost:8001"
+alias dar2="django-admin runserver localhost:8002"
+alias dar3="django-admin runserver localhost:8003"
+alias dar4="django-admin runserver localhost:8004"
+alias dar5="django-admin runserver localhost:8005"
+alias dar6="django-admin runserver localhost:8006"
+alias dar7="django-admin runserver localhost:8007"
+alias dar8="django-admin runserver localhost:8008"
+alias dar9="django-admin runserver localhost:8009"
+
+alias dop="docker-compose exec django bash -c \"pipenv run django-admin shell_plus\""
+alias dor="docker-compose exec django bash -c \"pipenv run django-admin runserver\""
+alias do1="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8001\""
+alias do2="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8002\""
+alias do3="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8003\""
+alias do4="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8004\""
+alias do5="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8005\""
+alias do6="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8006\""
+alias do7="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8007\""
+alias do8="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8008\""
+alias do9="docker-compose exec django bash -c \"pipenv run django-admin runserver localhost:8009\""
+
+# Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="$PYENV_ROOT/bin:$HOME/.yarn-global/bin:$NPM_PACKAGES/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+#DIRENV
+if [ -n $BASH_VERSION ]
+then
+    eval "$(direnv hook bash)"
+elif [ -n $ZSH_VERSION ]
+then
+    eval "$(direnv hook zsh)"
+fi
+
+
+# Node version manager
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# VIRTUALENVWRAPPER
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Projects
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper_lazy.sh
+#source /usr/local/bin/virtualenvwrapper_lazy.sh
+# cd to ~/Projects
+export CDPATH=.:$HOME/Projects:
+
+if ! [ -x "$(command -v vim)" ]; then
+  alias vim='vi'
+fi
+
+if [ -x "$(command -v tmux)" ]; then
+  if [ "$TMUX" = "" ]; then tmux -2; fi
+fi
