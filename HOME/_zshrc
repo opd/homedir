@@ -83,6 +83,7 @@ export MANPAGER="sh -c 'col -b | bat -l man -p'"
 KEYTIMEOUT=1
 alias vim=vim
 alias tmux="TERM=xterm-256color tmux"
+alias nvim=~/.bin/nvim.appimage
 #Force tmux to assume the terminal supports 256 colours
 #export TERM="xterm-256color"
 if [ "$TMUX" = "" ]; then tmux -2; fi

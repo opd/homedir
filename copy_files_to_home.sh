@@ -29,6 +29,3 @@ do
     sed -i -e "s:H0Me:/home/$USER:g" $dest_file
 done
 cd ..
-
-# make links
-ln -s ~/.vimrc ~/.config/nvim/init.vim

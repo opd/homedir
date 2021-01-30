@@ -3,5 +3,6 @@ setup/*/*
 **/*.deb
 setup/the_silver_searcher
 setup/purple-discord
+setup/nerd-fonts
 bin
 env
