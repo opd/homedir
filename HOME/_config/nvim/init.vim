@@ -27,6 +27,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " cfg_ack
 Plug 'mileszs/ack.vim'
 
+" run background processes (for cfg_ack)
+Plug 'tpope/vim-dispatch'
+
 "" cfg_airline
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
@@ -105,7 +108,8 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " cfg_ack
-let g:ackprg = 'python3 ~/.bin/search.py'
+" let g:ackprg = 'python3 ~/.bin/search.py'
+let g:ackprg = '~/.bin/search.py'
 let g:ack_autoclose = 1
 cnoreabbrev Ag Ack
 cnoreabbrev Rg Ack
