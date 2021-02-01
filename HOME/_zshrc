@@ -81,9 +81,10 @@ plugins=(git vi-mode common-aliases virtualenvwrapper web-search)
 export EDITOR="vim";
 export MANPAGER="sh -c 'col -b | bat -l man -p'"
 KEYTIMEOUT=1
-alias vim=vim
+alias realvim=/usr/bin/vim
 alias tmux="TERM=xterm-256color tmux"
 alias nvim=~/.bin/nvim.appimage
+alias vim=nvim
 #Force tmux to assume the terminal supports 256 colours
 #export TERM="xterm-256color"
 if [ "$TMUX" = "" ]; then tmux -2; fi

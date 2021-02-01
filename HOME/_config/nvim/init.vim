@@ -38,6 +38,7 @@ Plug 'mileszs/ack.vim'
 Plug 'itchyny/lightline.vim'
 
 " show current method
+" cfg_vista
 Plug 'liuchengxu/vista.vim'
 
 
@@ -47,6 +48,23 @@ Plug 'francoiscabrol/ranger.vim'
 
 " 
 Plug 'ryanoasis/vim-devicons'
+
+"" CHANGE BRACES
+" cs"' inside "Hello world!" to change it to 'Hello world!'
+" cs<tag> - wrap with tag
+" S - wrap in visual mod
+" ds" - delete wrap
+Plug 'tpope/vim-surround'
+
+" adjusts 'shiftwidth' and 'expandtab' from current file
+" :Sleuth Manually detect indentation
+Plug 'tpope/vim-sleuth'
+
+" {prefix) - <Leader>
+" {prefix}w
+" vi{prefix}w
+" cfg_wordmotion
+Plug 'chaoren/vim-wordmotion'
 
 
 call plug#end()
@@ -78,7 +96,7 @@ autocmd BufEnter ControlP let b:ale_enabled = 0
 
 
 " coc_cfg
-let g:coc_global_extensions = [ 'coc-tsserver', 'coc-styled-components', 'coc-highlight', 'coc-python', 'coc-git' ]
+let g:coc_global_extensions = [ 'coc-tsserver', 'coc-styled-components', 'coc-highlight', 'coc-python', 'coc-git', 'coc-pairs', 'coc-prettier' ]
 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -89,7 +107,6 @@ nmap <silent> gr <Plug>(coc-references)
 " cfg_ack
 let g:ackprg = 'python3 ~/.bin/search.py'
 let g:ack_autoclose = 1
-
 cnoreabbrev Ag Ack
 cnoreabbrev Rg Ack
 cnoreabbrev Agmo Ack -G \/models.py<C-b><Right><Right><Right>
@@ -98,45 +115,15 @@ cnoreabbrev Agu Ack -G \/urls.py<C-b><Right><Right><Right>
 cnoreabbrev Agt Ack -G \/test_<C-b><Right><Right><Right>
 cnoreabbrev Agf Ack -G \/factories.py<C-b><Right><Right><Right>
 cnoreabbrev Agcm Ack class\ -w -G \/models.py<C-b><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right>
+let g:ackhighlight = 1
+let g:ack_use_dispatch = 1
+" idk
+" let g:ack_qhandler = "botright copen 30"
+" Use this option to automagically open the file with 'j' or 'k'.
+let g:ackpreview = 1
+let g:ack_use_cword_for_empty_search = 1
 
-"" cfg_airline
-"let g:airline_powerline_fonts = 1
-"" let g:airline#extensions#tagbar#flags = 'f'
-"
-"let g:airline_mode_map = {
-"      \ '__' : '-',
-"      \ 'n' : 'N',
-"      \ 'i' : 'I',
-"      \ 'R' : 'R',
-"      \ 'c' : 'C',
-"      \ 'v' : 'V',
-"      \ 'V' : 'V',
-"      \ 's' : 'S',
-"      \ 'S' : 'S',
-"      \ }
-"let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-"" Don't show file type
-"" let g:airline_section_x='%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}%{airline#util#prepend("", 0)}'
-"" let g:airline_section_x='%{airline#util#prepend("", 0)}'
-"" default..
-"" let g:airline_section_z='%3p%% %#__accent_bold#%{g:airline_symbols.linenr}%4l%#__restore#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__# :%3v'
-"" modified, remove spaces
-"" let g:airline_section_z='%p%%%#__accent_bold#%{g:airline_symbols.linenr}%l%#__restore#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__#:%v'
-"" cfg_capslock
-"" let g:airline#extensions#capslock#enabled = 1
-"let g:airline_skip_empty_sections = 1
-"" determine whether inactive windows should have the left section collapsed to
-"" only the filename of that buffer.  >
-"let g:airline_inactive_collapse = 1
-"let g:airline#extensions#hunks#coc_git = 1
-"
-"" enable only this extensions
-"" let g:airline#extensions#hunks#non_zero_only = 1
-"" let g:airline#extensions#virtualenv#enabled = 0
-"" cfg_devicons
-"let g:webdevicons_enable_airline_statusline_fileformat_symbols = 0
-
-
+" cfg_vista cfg_lightline
 function! NearestMethodOrFunction() abort
   return get(b:, 'vista_nearest_method_or_function', '')
 endfunction
@@ -148,12 +135,10 @@ set statusline+=%{NearestMethodOrFunction()}
 " If you want to show the nearest function in your statusline automatically,
 " you can add the following line to your vimrc
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
-
 let g:vista_default_executive = 'coc'
 
 
-
+" cfg_lightline
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -179,3 +164,10 @@ let g:lightline.mode_map = {
       \ 's' : 'S',
       \ 'S' : 'S',
       \ }
+
+
+" Fix syntax
+doautocmd Syntax
+
+" cfg_wordmotion
+let g:wordmotion_prefix = '<Leader>'
