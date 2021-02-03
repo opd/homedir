@@ -69,8 +69,27 @@ Plug 'tpope/vim-sleuth'
 " cfg_wordmotion
 Plug 'chaoren/vim-wordmotion'
 
+" switch True <=> False and etc.
+" '-' - to switch
+" cfg_switch
+Plug 'AndrewRadev/switch.vim'
+
+
+" Comments
+Plug 'preservim/nerdcommenter'
+
+" [- : Move to previous line of lesser indent than the current line.
+" [+ : Move to previous line of greater indent than the current line.
+" [= : Move to previous line of same indent as the current line that is separated from the current line by lines of different indents.
+Plug 'jeetsukumaran/vim-indentwise'
+
+
+" multiselect
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
+
 
 call plug#end()
+
 
 
 " cfg_colortheme
@@ -175,3 +194,17 @@ doautocmd Syntax
 
 " cfg_wordmotion
 let g:wordmotion_prefix = '<Leader>'
+
+" cfg_coc
+"" Remap <C-f> and <C-b> for scroll float windows/popups.
+" nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+" nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+" inoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<Right>"
+" inoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<Left>"
+"
+
+" cfg_switch
+let g:switch_custom_definitions =
+    \ [
+    \   ['!==', '===']
+    \ ]
