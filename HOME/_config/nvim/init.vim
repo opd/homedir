@@ -26,16 +26,27 @@ Plug 'christoomey/vim-tmux-navigator'
 
 " cfg_ack
 Plug 'mileszs/ack.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " run background processes (for cfg_ack)
 Plug 'tpope/vim-dispatch'
+" crs snake_case
+" crm MixedCase
+" crc camelCase
+" cru UPPER_CASE
+" cr- dash-case
+" cr. dot.case
+" cr<space> space case
+" crt Title Case
+Plug 'tpope/vim-abolish'
 
 "" cfg_airline
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
 "
 "" cfg_git to show current branch in airline
-"Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " cfg_lightline
 Plug 'itchyny/lightline.vim'
@@ -131,13 +142,13 @@ nmap <silent> gr <Plug>(coc-references)
 let g:ackprg = '~/.bin/search.py'
 let g:ack_autoclose = 1
 cnoreabbrev Ag Ack
-cnoreabbrev Rg Ack
-cnoreabbrev Agmo Ack -G \/models.py<C-b><Right><Right><Right>
-cnoreabbrev Agv Ack -G \/views.py<C-b><Right><Right><Right>
-cnoreabbrev Agu Ack -G \/urls.py<C-b><Right><Right><Right>
-cnoreabbrev Agt Ack -G \/test_<C-b><Right><Right><Right>
-cnoreabbrev Agf Ack -G \/factories.py<C-b><Right><Right><Right>
-cnoreabbrev Agcm Ack class\ -w -G \/models.py<C-b><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right>
+" cnoreabbrev Rg Ack
+" cnoreabbrev Agmo Ack -G \/models.py<C-b><Right><Right><Right>
+" cnoreabbrev Agv Ack -G \/views.py<C-b><Right><Right><Right>
+" cnoreabbrev Agu Ack -G \/urls.py<C-b><Right><Right><Right>
+" cnoreabbrev Agt Ack -G \/test_<C-b><Right><Right><Right>
+" cnoreabbrev Agf Ack -G \/factories.py<C-b><Right><Right><Right>
+" cnoreabbrev Agcm Ack class\ -w -G \/models.py<C-b><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right>
 let g:ackhighlight = 1
 let g:ack_use_dispatch = 1
 " idk
@@ -159,6 +170,7 @@ set statusline+=%{NearestMethodOrFunction()}
 " you can add the following line to your vimrc
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 let g:vista_default_executive = 'coc'
+nnoremap <F8> :Vista!!<CR>
 
 
 " cfg_lightline
