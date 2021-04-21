@@ -35,7 +35,7 @@ Plug 'tpope/vim-dispatch'
 "Plug 'vim-airline/vim-airline-themes'
 "
 "" cfg_git to show current branch in airline
-"Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " cfg_lightline
 Plug 'itchyny/lightline.vim'
@@ -62,6 +62,16 @@ Plug 'tpope/vim-surround'
 " adjusts 'shiftwidth' and 'expandtab' from current file
 " :Sleuth Manually detect indentation
 Plug 'tpope/vim-sleuth'
+
+" crs snake_case
+" crm MixedCase
+" crc camelCase
+" cru UPPER_CASE
+" cr- dash-case
+" cr. dot.case
+" cr<space> space case
+" crt Title Case
+Plug 'tpope/vim-abolish'
 
 " {prefix) - <Leader>
 " {prefix}w

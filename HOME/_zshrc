@@ -169,6 +169,11 @@ alias gitcommit="git add -u; git commit"
 
 [[ -s "/etc/bash_completion.d/virtualenvwrapper" ]] && source "/etc/bash_completion.d/virtualenvwrapper"
 
+
+if [ -d "$HOME/.cargo" ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 # __conda_setup="$('H0Me/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
