@@ -8,6 +8,9 @@ import subprocess
 import shlex
 import sys
 import tempfile
+# TODO use slots
+# TODO support all providers
+# TODO cython ?
 
 EXTENSION_BLACK_LIST = [
     'pdf',
@@ -264,8 +267,16 @@ def remove_extra_spaces(lines):
         yield file_name, row, col, code_line
 
 
-def filter_max_length(data, max_line_length):
+def filter_max_length(data, max_line_length, exclude=None):
+    # TODO apply to js files only (because it can be minified)
     for item in data:
+        if exclude:
+            # TODO put all extension to slotted object
+            filename = item[0]
+            filename, ext = os.path.splitext(filename)
+            if ext.lower() in exclude:
+                yield item
+                continue
         if len(item[3]) > max_line_length:
             continue
         yield item
@@ -542,7 +553,7 @@ def main():
     if additional_words:
         lines = filter(filter_additional_words, lines)
 
-    lines = filter_max_length(lines, MAX_LINES)
+    lines = filter_max_length(lines, MAX_LINES, exclude=['.json'])
 
     search_pattern = params.search_pattern
     if is_simple_pattern(search_pattern):
