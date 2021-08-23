@@ -331,7 +331,7 @@ autocmd FileType python vnoremap f :!~/.bin/format_python.py<CR>
 " \d - goto definition
 " \n - show all the usages of a name
 " cfg_jedi
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 
 " TODO enable only for python
 " <F8> toggle tagbar
@@ -525,8 +525,8 @@ let g:indentLine_noConcealCursor=""
 
 " Python
 " cfg_jedi
-let g:jedi#completions_enabled = 0
-let g:jedi#show_call_signatures = 0
+" let g:jedi#completions_enabled = 0
+" let g:jedi#show_call_signatures = 0
 " cfg_ale
 let g:ale_linters = {
    \ 'python': ['flake8'],
@@ -557,10 +557,6 @@ nmap <leader>P <Plug>yankstack_substitute_newer_paste
 " RUSSIAN
 highlight lCursor guifg=NONE guibg=Cyan
 let g:XkbSwitchEnabled = 1
-
-" Vim switch
-" AndrewRadev/switch.vim
-let g:switch_mapping = "-"
 
 " cfg_wordmotion
 let g:wordmotion_prefix = '<Leader>'
@@ -668,6 +664,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gu <Plug>(coc-references)
 
 " cfg_switch
+let g:switch_mapping = "-"
 let g:switch_custom_definitions =
     \ [
     \   ['!==', '===']

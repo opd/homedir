@@ -93,7 +93,6 @@ Plug 'preservim/nerdcommenter'
 " [= : Move to previous line of same indent as the current line that is separated from the current line by lines of different indents.
 Plug 'jeetsukumaran/vim-indentwise'
 
-
 " multiselect
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
@@ -218,3 +217,4 @@ let g:switch_custom_definitions =
     \ [
     \   ['!==', '===']
     \ ]
+let g:switch_mapping = "-"
