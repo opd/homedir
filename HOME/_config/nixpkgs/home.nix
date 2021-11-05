@@ -22,6 +22,7 @@
     # svn
     pkgs.gh
     pkgs.git
+    pkgs.delta
     pkgs.git-lfs
     # utils
     pkgs.htop
@@ -29,6 +30,7 @@
     pkgs.neovim
     pkgs.jq
     # other
+    pkgs.gcc
     pkgs.docker-compose
     pkgs.pre-commit
     pkgs.pgformatter
@@ -53,10 +55,14 @@
     # python
     pkgs.direnv
     pkgs.black
+    pkgs.pipenv
     pkgs.python39Packages.flake8
     pkgs.python39Packages.isort
     pkgs.python39Packages.pip
-    pkgs.pipenv
     pkgs.python39Full
+    # python2
+    # pkgs.python27Packages.withPackages(p: with p; [ p.virtualenv ])
+    # pkgs.python27Full.withPackages
+    # pkgs.python27Packages.virtualenv
   ];
 }

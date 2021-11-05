@@ -1,3 +1,5 @@
 # .zshenv is sourced on all invocations of the shell
 # And this aliases can be used in vim: :!da show_urls
 alias da=django-admin
+-e 
+if [ -e H0Me/.nix-profile/etc/profile.d/nix.sh ]; then . H0Me/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
