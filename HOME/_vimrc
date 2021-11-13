@@ -1,6 +1,11 @@
 " vim: foldmethod=marker:foldlevel=0
 "
 set nocompatible
+" TODO fix tmux movement
+" TODO fix ctrlp_user_command
+" TODO fix ale
+" TODO fix ranger vim
+" TODO fix search
 
 " PLUGINS {{{
 " PLUG SETTINGS {{{
@@ -276,7 +281,7 @@ Plug 'ap/vim-css-color', {'for': ['css', 'sass', 'scss', 'less', 'ts']}
 "
 " comments, commenter
 " Language Server Client
-" :CocInstall coc-python, coc-tsserver
+" :CocInstall coc-pyright, coc-tsserver
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " cfg_caw
 Plug 'tyru/caw.vim'
@@ -292,7 +297,7 @@ Plug 'ervandew/supertab'
 
 " Syntax checking
 " cfg_ale
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 if has('nvim')
   " Completion
   " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -331,7 +336,7 @@ autocmd FileType python vnoremap f :!~/.bin/format_python.py<CR>
 " \d - goto definition
 " \n - show all the usages of a name
 " cfg_jedi
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 
 " TODO enable only for python
 " <F8> toggle tagbar
@@ -388,7 +393,7 @@ Plug 'tpope/vim-obsession'
 " REPEAT
 Plug 'tpope/vim-repeat'
 " Tmux move
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 
 " run background processes
 Plug 'tpope/vim-dispatch'
@@ -498,17 +503,16 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_line_prefix = '' " 
-
-let g:ctrlp_user_command = {
-    \ 'types': {
-        \ 1: ['.git', 'cd %s && { git ls-files; git ls-files . --exclude-standard --others; } | grep -v __generated__'],
-        \ 2: ['.hg', 'hg --cwd %s locate -I . | grep -v __generated__'],
-        \ },
-    \ 'fallback': 'find %s -type f'
-    \ }
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 " disable on ControlP
 autocmd BufEnter ControlP let b:ale_enabled = 0
+let g:ctrlp_user_command = {
+    \ 'types': {
+        \ 1: ['.git', 'cd %s && git ls-files -co --exclude-standard'],
+        \ 2: ['.hg', 'hg --cwd %s locate -I . | grep -v __generated__'],
+        \ },
+    \ 'fallback': 'find %s -type f | head 9999'
+    \ }
 
 set wildignore+=*/node_modules/*
 
@@ -525,17 +529,17 @@ let g:indentLine_noConcealCursor=""
 
 " Python
 " cfg_jedi
-let g:jedi#completions_enabled = 0
-let g:jedi#show_call_signatures = 0
-" cfg_ale
-let g:ale_linters = {
-   \ 'python': ['flake8'],
-   \ 'typescript': ['tslint', 'tsserver'],
-   \ 'javascript': ['eslint'],
-   \}
-let g:airline#extensions#ale#enabled = 1
-nmap ]e <Plug>(ale_next_wrap)
-nmap [e <Plug>(ale_previous_wrap)
+" let g:jedi#completions_enabled = 0
+" let g:jedi#show_call_signatures = 0
+" " cfg_ale
+" let g:ale_linters = {
+"    \ 'python': ['flake8'],
+"    \ 'typescript': ['tslint', 'tsserver'],
+"    \ 'javascript': ['eslint'],
+"    \}
+" let g:airline#extensions#ale#enabled = 1
+" nmap ]e <Plug>(ale_next_wrap)
+" nmap [e <Plug>(ale_previous_wrap)
 " f06a
 " f071
 let g:ale_sign_error = ''
@@ -566,7 +570,7 @@ let g:switch_mapping = "-"
 let g:wordmotion_prefix = '<Leader>'
 
 " cfg_ack
-let g:ackprg = '~/.bin/search.py'
+let g:ackprg = 'H0Me/.bin/search.py'
 let g:ack_autoclose = 1
 " cfg_ag
 " let g:ag_prg = 'H0Me/.bin/search.py'
@@ -623,9 +627,9 @@ let g:figletFontDir = '~/.figlet/contributed/'
 " typescript
 " filetype plugin on
 " set omnifunc=syntaxcomplete#Complete
-if has('nvim')
-  let g:node_host_prog = '/usr/local/bin/neovim-node-host'
-endif
+" if has('nvim')
+"   let g:node_host_prog = '/usr/local/bin/neovim-node-host'
+" endif
 let g:AutoPairsShortcutJump = '<S-tab>'
 
 " cfg_comfortablemotion
@@ -692,7 +696,7 @@ let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
 
 
-if has('nvim')
-  let g:python_host_prog = "~/.pyenv/versions/neovim2/bin/python"
-  let g:python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"
-endif
+"if has('nvim')
+"  let g:python_host_prog = "~/.pyenv/versions/neovim2/bin/python"
+"  let g:python3_host_prog = "~/.pyenv/versions/neovim3/bin/python"
+"endif

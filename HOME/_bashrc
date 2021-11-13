@@ -149,6 +149,8 @@ unset __conda_setup
 
 . H0Me/.nix-profile/etc/profile.d/nix.sh
 
+export CDPATH=.:$HOME/Projects:
+
 #DIRENV
 eval "$(direnv hook bash)"
 
@@ -156,11 +158,14 @@ if [ -x "$(command -v tmux)" ]; then
   if [ "$TMUX" = "" ]; then tmux -2; fi
 fi
 
+eval "$(starship init bash)"
+
 
 alias dl="direnv allow"
 alias ys="yarn start"
 alias dr="django-admin runserver"
 
+alias da="django-admin"
 alias dap="django-admin shell_plus"
 alias dapp="django-admin shell_plus --print-sql"
 alias daf="django-admin set_fake_passwords --password 123"

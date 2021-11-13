@@ -19,7 +19,7 @@
   # changes in each release.
   home.stateVersion = "21.05";
   home.packages = [
-    # svn
+    # git
     pkgs.gh
     pkgs.git
     pkgs.delta
@@ -40,6 +40,8 @@
     pkgs.sqlite
     pkgs.tmux
     pkgs.watchman
+    pkgs.starship
+    pkgs.ranger
     ### cloud
     pkgs.amazon-ecr-credential-helper
     pkgs.aws-vault
