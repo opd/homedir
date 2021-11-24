@@ -42,6 +42,7 @@
     pkgs.watchman
     pkgs.starship
     pkgs.ranger
+    pkgs.kitty
     ### cloud
     pkgs.amazon-ecr-credential-helper
     pkgs.aws-vault
