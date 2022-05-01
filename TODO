@@ -61,8 +61,82 @@ dconf write /org/gnome/terminal/legacy/profiles:/list "['aaaaaaaa-bbbb-cccc-dddd
 dconf write /org/gnome/terminal/legacy/profiles:/:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/use-system-font false
 dconf write /org/gnome/terminal/legacy/profiles:/:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/font "'DroidSansMono Nerd Font 11'"
 
-
 dconf write /org/gnome/terminal/legacy/profiles:/:aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee/font "'Ubuntu Mono derivative Powerline 13'"
 
 #
 Реакт аналог для консоли
+
+#####
+# run tmux in shell
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  tmux
+fi
+
+# brew install zsh-completion
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+fi
+
+
+# hooks
+# direnv hook
+eval "$(direnv hook zsh)"
+# starship
+eval "$(starship init zsh)"
+
+
+# TMUX
+# remap prefix from 'C-b' to 'C-a'
+unbind C-b
+set-option -g prefix C-a
+set -g default-terminal "screen-256color"
+# Start windows and panes at 1, not 0
+set -g base-index 1
+setw -g pane-base-index 1
+
+# enable mouse
+set -g mouse on
+# vi is good
+setw -g mode-keys vi
+set -g status-keys vi
+
+
+# reload config
+bind-key r source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded"
+# edit tmux.conf
+bind-key e new-window "vim ~/.tmux.conf"
+# switching between dark and light mode in tmuX
+# also switching between vim
+# https://www.seanh.cc/2021/01/02/change-between-light-and-dark-themes-in-tmux/
+bind-key T run-shell ~/.bin/tmux_toggle_theme.sh
+
+# move through panes
+bind-key h select-pane -L
+bind-key j select-pane -D
+bind-key k select-pane -U
+bind-key l select-pane -R
+
+# open panes with current directory
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+
+# resize
+bind H resize-pane -L 5
+bind J resize-pane -D 5
+bind K resize-pane -U 5
+bind L resize-pane -R 5
+
+# install tmux plugin manager
+# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# List of plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-yank'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
