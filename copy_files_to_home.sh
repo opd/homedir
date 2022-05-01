@@ -25,8 +25,9 @@ do
     echo $DEST
     mkdir -p $DIR
     dest_file=~/.${i##./_}
-    cp ${i##./}  $dest_file
-    sed -i -e "s:H0Me:/home/$USER:g" $dest_file
+    source_file=${i##./}
+    cp $source_file  $dest_file
+    sed -i -e "s:H0Me:$HOME:g" $dest_file
 done
 cd ..
 
