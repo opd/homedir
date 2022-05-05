@@ -8,8 +8,13 @@ export ZSH=$HOME/.oh-my-zsh
 export PYENV_ROOT="$HOME/.pyenv"
 NPM_PACKAGES="${HOME}/.npm-packages"
 export PATH="$PYENV_ROOT/bin:$HOME/.yarn-global/bin:$NPM_PACKAGES/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+
+if command -v pyenv
+then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
+
 #DIRENV
 eval "$(direnv hook zsh)"
 
