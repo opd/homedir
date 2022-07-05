@@ -24,6 +24,9 @@ Plug 'flazz/vim-colorschemes'
 " Tmux move
 Plug 'christoomey/vim-tmux-navigator'
 
+" far
+Plug 'brooth/far.vim'
+
 " cfg_ack
 Plug 'mileszs/ack.vim'
 
