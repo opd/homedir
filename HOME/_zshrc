@@ -131,6 +131,7 @@ alias dr="django-admin runserver"
 alias dap="django-admin shell_plus"
 alias dapp="django-admin shell_plus --print-sql"
 alias daf="django-admin set_fake_passwords --password 123"
+alias das="django-admin makemigrations --dry-run -v 3"
 alias dar="django-admin runserver"
 alias daro="django-admin runserver 0.0.0.0:8000"
 alias dar1="django-admin runserver localhost:8001"
@@ -163,15 +164,18 @@ alias gitcommit="git add -u; git commit"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('H0Me/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "H0Me/miniconda3/etc/profile.d/conda.sh" ]; then
-#         . "H0Me/miniconda3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="H0Me/miniconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
+__conda_setup="$('H0Me/opt/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "H0Me/opt/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "H0Me/opt/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="H0Me/opt/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
 # <<< conda initialize <<<
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
