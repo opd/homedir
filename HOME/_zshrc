@@ -160,6 +160,10 @@ alias do9="docker-compose exec django bash -c \"pipenv run django-admin runserve
 alias gitdiff="git diff HEAD"
 alias gitcommit="git add -u; git commit"
 
+alias nvim="/opt/homebrew/bin/nvim -u ~/.nvim_config.lua"
+
+
+
 #[[ -s "/etc/bash_completion.d/virtualenvwrapper" ]] && source "/etc/bash_completion.d/virtualenvwrapper"
 
 # >>> conda initialize >>>
