@@ -17,6 +17,10 @@ vim.opt.smartcase = true
 -- disable netrw for nvim-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1 
+vim.keymap.set('n', '<F7>', 'Oimport pdb;pdb.set_trace()<Esc>')
+vim.cmd.cnoreabbrev(
+  {"PlugInstall", "PackerInstall"}
+)
 
 local function require_or_nil(module_name)
   local status, module = pcall(require, module_name)
@@ -34,6 +38,15 @@ local function _require(module_name)
   local anyFunc = function(...) end
   return {setup = anyFunc, init = anyFunc, default_capabilities = anyFunc }
 end
+
+vim.api.nvim_create_user_command('Ag',
+  function(opts)
+    _require('telescope.builtin').live_grep(
+      {default_text=opts.fargs[1]}
+    )
+  end,
+  { nargs = 1 }
+)
 
 vim.o.timeout = true
 vim.o.timeoutlen = 300
@@ -56,19 +69,58 @@ adm.setup({
   })
 adm.init()
 
-_require("telescope").setup{
-  defaults = {
-    mappings = {
-      i = {
-        ["<C-u>"] = false
+local lga_actions = _require("telescope-live-grep-args.actions")
+local telescope = require_or_nil("telescope")
+if telescope then
+  telescope.setup{
+    defaults = {
+      mappings = {
+        i = {
+          ["<C-u>"] = false
+        },
+      },
+      vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          -- '--hidden',
       },
     },
+    extensions = {
+      live_grep_args = {
+        auto_quoting = true, -- enable/disable auto-quoting
+        -- define mappings, e.g.
+        mappings = { -- extend mappings
+          i = {
+            ["<C-k>"] = lga_actions.quote_prompt(),
+            ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+          },
+        },
+        find_command = {"rg"},
+        -- ... also accepts theme settings, for example:
+        -- theme = "dropdown", -- use dropdown theme
+        -- theme = { }, -- use own theme spec
+        -- layout_config = { mirror=true }, -- mirror preview pane
+      }
+    },
   }
-}
+  telescope.load_extension("live_grep_args")
+end
+
+local live_grep_args_shortcuts = require_or_nil("telescope-live-grep-args.shortcuts")
+if live_grep_args_shortcuts then
+  vim.keymap.set('n', '<leader>fg', live_grep_args_shortcuts.grep_word_under_cursor)
+end
+
 local telescope_builtin = require_or_nil('telescope.builtin')
 if telescope_builtin then
   vim.keymap.set('n', '<C-p>', telescope_builtin.find_files, {})
-  vim.keymap.set('n', '<leader>fg', telescope_builtin.live_grep, {})
+  -- vim.keymap.set('n', '<leader>fg', telescope_builtin.live_grep, {})
+  -- vim.keymap.set('n', '<leader>fg', telescope.extensions.live_grep_args.live_grep_args, {})
   vim.keymap.set('n', '<leader>fb', telescope_builtin.buffers, {})
   vim.keymap.set('n', '<leader>fh', telescope_builtin.help_tags, {})
   vim.keymap.set('n', '<leader>ft', telescope_builtin.treesitter, {})
@@ -79,11 +131,14 @@ _require'nvim-treesitter.configs'.setup {
   ensure_installed = { "python" },
 }
 _require("nvim-tree").setup() 
-vim.api.nvim_set_keymap('n', '<leader>ff', ":NvimTreeToggle<CR>", {noremap=true, silent=true})
+-- vim.api.nvim_set_keymap('n', '<leader>ff', ":NvimTreeToggle<CR>", {noremap=true, silent=true})
+vim.api.nvim_set_keymap('n', '<leader>ff', ":RnvimrToggle<CR>", {noremap=true, silent=true})
+vim.g.rnvimr_draw_border = 1
 _require("nvim-surround").setup({})
 
 _require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
 _require("mason").setup()
+_require("various-textobjs").setup({ useDefaultKeymaps = true })
 
 local cmp = require_or_nil('cmp')
 if cmp then
@@ -197,6 +252,7 @@ return require('packer').startup(function(use)
   -- or                            , branch = '0.1.x',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
+  use "nvim-telescope/telescope-live-grep-args.nvim"
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use({
       "kylechui/nvim-surround",
@@ -208,6 +264,10 @@ return require('packer').startup(function(use)
   use {
     'phaazon/hop.nvim',
     branch = 'v2', -- optional but strongly recommended
+  }
+  use {
+    'mg979/vim-visual-multi',
+    branch = 'master',
   }
   use {
       "williamboman/mason.nvim",
@@ -222,6 +282,17 @@ return require('packer').startup(function(use)
   Plug 'gennaro-tedesco/nvim-peekup'
   Plug 'hrsh7th/nvim-cmp'
   Plug 'hrsh7th/cmp-nvim-lsp'
+  -- crs snake_case
+  -- crm MixedCase
+  -- crc camelCase
+  -- cru UPPER_CASE
+  -- cr- dash-case
+  -- cr. dot.case
+  -- cr<space> space case
+  -- crt Title Case
+  Plug 'tpope/vim-abolish'
+  Plug 'chrisgrieser/nvim-various-textobjs'
+  Plug 'kevinhwang91/rnvimr'
   -- TODO
   -- https://github.com/chrisgrieser/nvim-various-textobjs
 
