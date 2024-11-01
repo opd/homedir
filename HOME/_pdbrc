@@ -1,0 +1,2 @@
+alias git import os;;from importlib.machinery import SourceFileLoader;;SourceFileLoader("pdb_tools",os.path.expanduser("~/.bin/pdb_tools.py")).load_module().up_to_git(__file__)
+alias cmp import os;;from importlib.machinery import SourceFileLoader;;SourceFileLoader("pdb_tools",os.path.expanduser("~/.bin/pdb_tools.py")).load_module().cmp(%1, %2)

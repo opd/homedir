@@ -82,10 +82,13 @@ def convert_git_path(path):
         name = '.' + name[1:]
     return Path(name)
 
-def copy_files_to_git(*, source_path, dest_path, home_dir):
+def copy_files_to_git(*, source_path, dest_path, home_dir, delete=True, convert_paths=True):
     file_list = get_files_list(dest_path)
     for path in file_list:
-        from_ = source_path / convert_git_path(path)
+        if convert_paths:
+            from_ = source_path / convert_git_path(path)
+        else:
+            from_ = source_path / path
         to = dest_path / path
         replacements = {
             str(home_dir): HOME_ALIAS,
@@ -93,9 +96,9 @@ def copy_files_to_git(*, source_path, dest_path, home_dir):
         try:
             copy_and_modify_file(from_, to, replacements=replacements)
         except NoSourceFile:
-            dest_path.unlink()
-            print('"{path}" deleted'.format(path=path))
-            continue
+            if delete:
+                dest_path.unlink()
+                print('"{path}" deleted'.format(path=path))
 
 
 def copy_files_to_home(*, source_path, dest_path, home_dir):
@@ -125,15 +128,18 @@ def main():
     parser = argparse.ArgumentParser(description='This is a simple example of using argparse.')
     parser.add_argument('--to-git', action='store_true', default=False, help='Copy to git')
     parser.add_argument('--to-home', action='store_true', default=False, help='Copy to home')
+    parser.add_argument('--from-backup', type=str, default=False, help='Copy to git')
 
     # Parse the arguments
     args = parser.parse_args()
-    assert args.to_git or args.to_home, '--to-git ro --to-home is required'
+    assert args.to_git or args.to_home or args.from_backup, '--to-git ro --to-home is required'
 
     if args.to_git:
         copy_files_to_git(source_path=home_path, dest_path=git_path, home_dir=home_path)
     elif args.to_home:
         copy_files_to_home(source_path=git_path, dest_path=home_path, home_dir=home_path)
+    elif args.from_backup:
+        copy_files_to_git(source_path=PROJECT_DIR / args.from_backup, dest_path=git_path, home_dir=home_path, delete=False, convert_paths=False)
 
     print(args)
 
