@@ -16,7 +16,7 @@ pushupstream = !git push --set-upstream origin $(git symbolic-ref --short HEAD)
   keepBackup = false;
   tool = p4merge
 [diff]
-  tool = vimdiff
+  tool = p4merge
 [core]
   # https://github.com/dandavison/delta
   pager = delta --keep-plus-minus-markers

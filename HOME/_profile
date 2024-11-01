@@ -27,3 +27,8 @@ export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
 export PATH="$HOME/.poetry/bin:$PATH"
 # -e 
 if [ -e H0Me/.nix-profile/etc/profile.d/nix.sh ]; then . H0Me/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

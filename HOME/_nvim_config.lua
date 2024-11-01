@@ -39,6 +39,12 @@ local function _require(module_name)
   return {setup = anyFunc, init = anyFunc, default_capabilities = anyFunc }
 end
 
+
+local gitlinker = require_or_nil('gitlinker')
+if gitlinker then
+  gitlinker.setup()
+end
+
 vim.api.nvim_create_user_command('Ag',
   function(opts)
     _require('telescope.builtin').live_grep(
@@ -195,7 +201,8 @@ end
 local capabilities = _require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require_or_nil('lspconfig')
 if lspconfig then
-  lspconfig.pylsp.setup{capabilities=capabilities}
+  -- lspconfig.pylsp.setup{capabilities=capabilities}
+  lspconfig.pyright.setup{capabilities=capabilities}
   lspconfig.tsserver.setup{capabilities=capabilities}
   lspconfig.lua_ls.setup{
     capabilities=capabilities,
@@ -265,12 +272,11 @@ return require('packer').startup(function(use)
   use 'nvim-tree/nvim-tree.lua'
 
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.1',
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',
   -- or                            , branch = '0.1.x',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
   use 'L3MON4D3/LuaSnip'
-  use "nvim-telescope/telescope-live-grep-args.nvim"
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use({
       "kylechui/nvim-surround",
@@ -309,8 +315,17 @@ return require('packer').startup(function(use)
   -- cr<space> space case
   -- crt Title Case
   Plug 'tpope/vim-abolish'
+  -- aS: subword
+  -- ii: lines with same or higher identation
   Plug 'chrisgrieser/nvim-various-textobjs'
   Plug 'kevinhwang91/rnvimr'
+  Plug 'f-person/git-blame.nvim'
+  Plug 'nvim-telescope/telescope-live-grep-args.nvim'
+
+  -- for gitlinker
+  Plug 'nvim-lua/plenary.nvim'
+  -- \gy Copy github url
+  Plug 'ruifm/gitlinker.nvim'
   -- TODO
   -- https://github.com/chrisgrieser/nvim-various-textobjs
 

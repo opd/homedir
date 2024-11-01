@@ -191,3 +191,6 @@ alias do9="docker-compose exec django bash -c \"pipenv run django-admin runserve
 
 alias gitdiff="git diff HEAD"
 alias gitcommit="git add -u; git commit"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
