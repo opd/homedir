@@ -49,14 +49,20 @@ def copy_and_modify_file(source: Path, destination: Path, backup: Path | None=No
         content = content.replace(old_text, new_text)
 
     # Check if the destination file exists
-    if backup and destination.exists():
-        with destination.open('r', encoding='utf-8') as f:
-            dest_content = f.read()
-        if dest_content != content:
-            # Create the backup directory if it doesn't exist
-            backup.parent.mkdir(parents=True, exist_ok=True)
-            # Copy the existing destination file to the backup path
-            shutil.copy2(destination, backup)
+    if destination.exists():
+        if backup:
+            with destination.open('r', encoding='utf-8') as f:
+                dest_content = f.read()
+            if dest_content != content:
+                # Create the backup directory if it doesn't exist
+                backup.parent.mkdir(parents=True, exist_ok=True)
+                # Copy the existing destination file to the backup path
+                shutil.copy2(destination, backup)
+    else:
+        # Create the directory if it doesn't exist
+        destination.parent.mkdir(parents=True, exist_ok=True)
+
+
     
     # Write modified content to the destination file
     with destination.open('w', encoding='utf-8') as f:
