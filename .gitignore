@@ -1,5 +1,6 @@
 xkb-switch
 setup/*/*
+**/.DS_Store
 **/*.deb
 setup/the_silver_searcher
 setup/purple-discord
