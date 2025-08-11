@@ -6,6 +6,24 @@ from typing import Any
 def _path_satisfy(path):
     return '/.' not in path
 
+# TODO
+# frame = sys._getframe()
+# frame = frame.f_back
+# obj = frame.f_back.f_locals['self']
+"""
+import sys
+
+# From within pdb prompt:
+(Pdb) import sys
+(Pdb) frame = sys._getframe()
+(Pdb) while frame:
+...     if 'self' in frame.f_locals and hasattr(frame.f_locals['self'], 'cmdloop'):
+...         if frame.f_locals['self'].__class__.__name__ == 'Pdb':
+...             pdb_instance = frame.f_locals['self']
+...             break
+...     frame = frame.f_back
+"""
+
 def _get_traceback_paths(last_traceback):
     # Extract traceback details
     traceback_info = traceback.extract_tb(last_traceback)
@@ -14,8 +32,19 @@ def _get_traceback_paths(last_traceback):
     return paths
 
 
+def _get_traceback():
+    # TODO...
+    frame = sys._getframe()
+    frame = frame.f_back
+    obj = frame.f_back.f_locals['self']
+    if hasattr(sys, 'last_traceback'):
+        return sys.last_traceback
+    exc_type, exc_value, exc_tb = sys.exc_info()
+    return exc_tb
+
+
 def up_to_git(file=None):
-    paths = _get_traceback_paths(sys.last_traceback)
+    paths = _get_traceback_paths(_get_traceback())
     paths = reversed(paths)
     value = next((i for i, s in enumerate(paths) if _path_satisfy(s)), None)
     print(value)

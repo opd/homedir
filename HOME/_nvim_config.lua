@@ -86,16 +86,16 @@ if telescope then
           ["<C-u>"] = false
         },
       },
-      vimgrep_arguments = {
-          'rg',
-          '--color=never',
-          '--no-heading',
-          '--with-filename',
-          '--line-number',
-          '--column',
-          '--smart-case',
-          -- '--hidden',
-      },
+      -- vimgrep_arguments = {
+      --     'rg',
+      --     '--color=never',
+      --     '--no-heading',
+      --     '--with-filename',
+      --     '--line-number',
+      --     '--column',
+      --     '--smart-case',
+      --     -- '--hidden',
+      -- },
     },
     extensions = {
       live_grep_args = {
@@ -146,7 +146,7 @@ _require("nvim-surround").setup({})
 
 _require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
 _require("mason").setup()
-_require("various-textobjs").setup({ useDefaultKeymaps = true })
+_require("various-textobjs").setup({ useDefaults = true })
 
 -- SNIPPET SETUP
 local luasnip = require_or_nil('luasnip')
@@ -204,7 +204,17 @@ local lspconfig = require_or_nil('lspconfig')
 if lspconfig then
   -- lspconfig.pylsp.setup{capabilities=capabilities}
   lspconfig.pyright.setup{capabilities=capabilities}
-  lspconfig.tsserver.setup{capabilities=capabilities}
+  lspconfig.ts_ls.setup{
+    capabilities=capabilities,
+    settings = {
+      python = {
+        analysis = {
+          autoImportCompletions = true,
+          typeCheckingMode = "basic",
+        },
+      },
+    },
+  }
   lspconfig.lua_ls.setup{
     capabilities=capabilities,
     settings={
@@ -240,6 +250,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<space>ai', function()
+      vim.lsp.buf.code_action({
+        filter = function(action)
+          return action.kind and string.match(action.kind, 'source%.addMissingImports')
+        end,
+        apply = true,
+      })
+    end, opts)
+    vim.keymap.set('n', '<space>li', '<cmd>LspInfo<cr>', { desc = 'LSP Info' })
+    vim.keymap.set('n', '<space>ll', '<cmd>LspLog<cr>', { desc = 'LSP Log' })
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<space>f', function()
       vim.lsp.buf.format { async = true }
@@ -266,7 +286,6 @@ end
 local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
-  local Plug = use
   use 'wbthomason/packer.nvim'
   -- My plugins here
   use { 'sainnhe/sonokai' }
@@ -305,10 +324,34 @@ return require('packer').startup(function(use)
   use 'numToStr/Comment.nvim'
   use 'nmac427/guess-indent.nvim'
   use 'Wansmer/sibling-swap.nvim'
+  use "folke/snacks.nvim"
+
+  use {
+    "coder/claudecode.nvim",
+    requires = { "folke/snacks.nvim" },
+    config = function()
+      require("claudecode").setup({
+        terminal_cmd = "/opt/homebrew/bin/claude", -- Point to local installation
+      })
+      
+      -- Key mappings
+      vim.keymap.set("n", "<leader>ac", "<cmd>ClaudeCode<cr>", { desc = "Toggle Claude" })
+      vim.keymap.set("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", { desc = "Focus Claude" })
+      vim.keymap.set("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", { desc = "Resume Claude" })
+      vim.keymap.set("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>", { desc = "Continue Claude" })
+      vim.keymap.set("n", "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", { desc = "Select Claude model" })
+      vim.keymap.set("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", { desc = "Add current buffer" })
+      vim.keymap.set("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>", { desc = "Send to Claude" })
+      vim.keymap.set("n", "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", { desc = "Accept diff" })
+      vim.keymap.set("n", "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", { desc = "Deny diff" })
+    end,
+  }
+
+
   -- View registers ""
-  Plug 'gennaro-tedesco/nvim-peekup'
-  Plug 'hrsh7th/nvim-cmp'
-  Plug 'hrsh7th/cmp-nvim-lsp'
+  use 'gennaro-tedesco/nvim-peekup'
+  use 'hrsh7th/nvim-cmp'
+  use 'hrsh7th/cmp-nvim-lsp'
   -- crs snake_case
   -- crm MixedCase
   -- crc camelCase
@@ -317,18 +360,18 @@ return require('packer').startup(function(use)
   -- cr. dot.case
   -- cr<space> space case
   -- crt Title Case
-  Plug 'tpope/vim-abolish'
+  use 'tpope/vim-abolish'
   -- aS: subword
   -- ii: lines with same or higher identation
-  Plug 'chrisgrieser/nvim-various-textobjs'
-  Plug 'kevinhwang91/rnvimr'
-  Plug 'f-person/git-blame.nvim'
-  Plug 'nvim-telescope/telescope-live-grep-args.nvim'
+  use 'chrisgrieser/nvim-various-textobjs'
+  use 'kevinhwang91/rnvimr'
+  use 'f-person/git-blame.nvim'
+  use 'nvim-telescope/telescope-live-grep-args.nvim'
 
   -- for gitlinker
-  Plug 'nvim-lua/plenary.nvim'
+  use 'nvim-lua/plenary.nvim'
   -- \gy Copy github url
-  Plug 'ruifm/gitlinker.nvim'
+  use 'ruifm/gitlinker.nvim'
   -- TODO
   -- https://github.com/chrisgrieser/nvim-various-textobjs
 

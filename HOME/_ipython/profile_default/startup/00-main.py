@@ -79,6 +79,8 @@ class DataImporter(object):
             cookies=self.request_kwargs['cookies'],
         )
         payload = response.json()
+        if 'error' in payload:
+            print(payload['error'])
 
         data = payload['data']
         rows = data["rows"]
@@ -134,8 +136,13 @@ class DataImporter(object):
         model_cls.objects.bulk_update(items, fields=update_fields)
 
     def create_items(self, items_qs):
+        from django.db import connection
+
         sql, params = items_qs.query.sql_with_params()
-        sql = sql % params
+        with connection.cursor() as cursor:
+            # This returns the full SQL string with params safely quoted
+            compiled_sql = cursor.cursor.mogrify(sql, params)
+        sql = compiled_sql
         print(sql)
         data = self.run_sql(sql)
         model_cls = items_qs.model
