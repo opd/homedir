@@ -175,3 +175,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 export PATH=$HOME/development/flutter/bin:$PATH
 
+
+# opencode
+export PATH=H0Me/.opencode/bin:$PATH
