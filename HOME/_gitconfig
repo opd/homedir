@@ -10,6 +10,8 @@ out = log --pretty=oneline --abbrev-commit --graph @{u}..
 in = !git fetch && git log --pretty=oneline --abbrev-commit --graph ..@{u}
 root = rev-parse --show-toplevel
 pushupstream = !git push --set-upstream origin $(git symbolic-ref --short HEAD)
+merge-master = "!git checkout master && git pull && git checkout - && git merge --no-edit master"
+rebase-master = "!git checkout master && git pull && git checkout - && git rebase master"
 [init]
   templatedir = ~/.git-templates
 [merge]

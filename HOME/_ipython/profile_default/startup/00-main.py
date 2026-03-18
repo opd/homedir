@@ -54,13 +54,66 @@ def _get_headers(curl_command):
     return result
 
 
+# TODO
+def install_playwright():
+    """Install playwright and required browsers if not present."""
+    print("🔍 Checking for Playwright...")
+    
+    try:
+        import playwright
+        print("✅ Playwright is already installed.")
+        return True
+    except ImportError:
+        print("📦 Installing playwright via pip...")
+        try:
+            subprocess.check_call([
+                sys.executable, "-m", "pip", "install", "playwright"
+            ])
+            print("✅ Playwright installed successfully.")
+        except subprocess.CalledProcessError as e:
+            print("❌ Failed to install Playwright.")
+            print(e)
+            return False
+
+    print("🌐 Installing Playwright Chromium browser...")
+    try:
+        subprocess.check_call([
+            sys.executable, "-m", "playwright", "install", "chromium"
+        ])
+        print("✅ Chromium browser installed.")
+    except subprocess.CalledProcessError as e:
+        print("❌ Failed to install Chromium.")
+        print(e)
+        return False
+
+    return True
+
+
+def _get_headers_for_url(url):
+    install_playwright()
+    pass
+
+
 class DataImporter(object):
     def __init__(self, curl_command=None):
-        curl_command = curl_command or _get_clipboard_content()
-        self.request_kwargs = _get_headers(curl_command)
+        if curl_command.startswith('http'):
+            self.request_kwargs = _get_headers_for_url(curl_command)
+        else:
+            curl_command = curl_command or _get_clipboard_content()
+            self.request_kwargs = _get_headers(curl_command)
 
 
-    def run_sql(self, sql):
+    def _save_data_to_json(self, data, json_file):
+        import json
+        from pathlib import Path
+
+        path = Path(json_file).expanduser()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False, default=str)
+        )
+
+    def run_sql(self, sql, json_file=None):
         import requests
 
         payload = {
@@ -89,9 +142,15 @@ class DataImporter(object):
         columns = [
             x["display_name"] for x in data['results_metadata']['columns']
         ]
-        return [
+        result = [
             dict(zip(columns, row)) for row in rows
         ]
+        if json_file:
+            self._save_data_to_json(result, json_file)
+        return result
+
+    def get_data(self, sql, json_file=None):
+        return self.run_sql(sql, json_file=json_file)
 
     def _format_pk(self, pk):
         from uuid import UUID
@@ -113,8 +172,31 @@ class DataImporter(object):
         return self.run_sql(sql)
 
 
+    def _build_item(self, model_cls, params):
+        from django.db import models
+        field_map = {
+            f.attname: f for f in model_cls._meta.fields
+        }
+        updated_params = params.copy()
+        for key, value in params.items():
+            field = field_map[key]
+            if isinstance(field, models.JSONField):
+                import pdb;pdb.set_trace()
+            elif isinstance(field, models.DateField):
+                if value is None:
+                    continue
+                value = value[:10]
+            else:
+                continue
+            updated_params[key] = value
+        return model_cls(**updated_params)
+
+
 
     def update_items(self, items):
+        import json
+        from django.db import models
+        
         items = list(items)
         model_cls = type(items[0])
         items_map = {
@@ -125,17 +207,33 @@ class DataImporter(object):
             str(k): v for k, v in items_map.items()
         }
         pk_name = model_cls._meta.pk.column
+        
+        # Get JSON fields for introspection
+        json_fields = {
+            field.column: field for field in model_cls._meta.fields
+            if isinstance(field, models.JSONField)
+        }
+        
         for item in fetched_data:
             pk = item[pk_name]
             obj = items_map[pk]
             for key, value in item.items():
                 if key == pk_name:
                     continue
+                
+                # Check if this is a JSON field and value is a string
+                if key in json_fields and isinstance(value, str):
+                    try:
+                        value = json.loads(value)
+                    except (json.JSONDecodeError, TypeError):
+                        # If parsing fails, keep original string value
+                        pass
+                
                 setattr(obj, key, value)
         update_fields = [f for f in fetched_data[0].keys() if f != pk_name]
         model_cls.objects.bulk_update(items, fields=update_fields)
 
-    def create_items(self, items_qs):
+    def create_items(self, items_qs, ignore_conflicts=False):
         from django.db import connection
 
         sql, params = items_qs.query.sql_with_params()
@@ -147,6 +245,10 @@ class DataImporter(object):
         data = self.run_sql(sql)
         model_cls = items_qs.model
         items = [
-            model_cls(**item) for item in data
+            self._build_item(model_cls, item) for item in data
         ]
-        model_cls.objects.bulk_create(items)
+        model_cls.objects.bulk_create(items, ignore_conflicts=ignore_conflicts)
+
+    def upsert_items(self, items_qs):
+        self.create_items(items_qs, ignore_conflicts=True)
+        self.update_items(items_qs)
