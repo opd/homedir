@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.14
 import argparse
 import datetime
 from pathlib import Path
@@ -57,6 +57,9 @@ def copy_and_modify_file(source: Path, destination: Path, backup: Path | None=No
             backup.parent.mkdir(parents=True, exist_ok=True)
             # Copy the existing destination file to the backup path
             shutil.copy2(destination, backup)
+
+    # create destination parent dir
+    destination.parent.mkdir(parents=True, exist_ok=True)
     
     # Write modified content to the destination file
     with destination.open('w', encoding='utf-8') as f:

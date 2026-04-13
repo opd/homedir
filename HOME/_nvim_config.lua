@@ -1,5 +1,3 @@
--- Colors
-vim.cmd.colorscheme("sonokai")
 -- other
 vim.opt.clipboard = "unnamedplus"
 -- line number
@@ -200,12 +198,12 @@ if cmp then
 end
 
 local capabilities = _require('cmp_nvim_lsp').default_capabilities()
-local lspconfig = require_or_nil('lspconfig')
-if lspconfig then
-  -- lspconfig.pylsp.setup{capabilities=capabilities}
-  lspconfig.pyright.setup{capabilities=capabilities}
-  lspconfig.ts_ls.setup{
-    capabilities=capabilities,
+if vim.lsp and vim.lsp.config and vim.lsp.enable then
+  vim.lsp.config('pyright', {
+    capabilities = capabilities,
+  })
+  vim.lsp.config('ts_ls', {
+    capabilities = capabilities,
     settings = {
       python = {
         analysis = {
@@ -214,15 +212,41 @@ if lspconfig then
         },
       },
     },
-  }
-  lspconfig.lua_ls.setup{
-    capabilities=capabilities,
-    settings={
+  })
+  vim.lsp.config('lua_ls', {
+    capabilities = capabilities,
+    settings = {
       Lua = {
-        diagnostics = {globals={'vim'}}
+        diagnostics = { globals = {'vim'} }
       }
     }
-  }
+  })
+  vim.lsp.enable({ 'pyright', 'ts_ls', 'lua_ls' })
+else
+  local lspconfig = require_or_nil('lspconfig')
+  if lspconfig then
+    -- lspconfig.pylsp.setup{capabilities=capabilities}
+    lspconfig.pyright.setup{capabilities=capabilities}
+    lspconfig.ts_ls.setup{
+      capabilities=capabilities,
+      settings = {
+        python = {
+          analysis = {
+            autoImportCompletions = true,
+            typeCheckingMode = "basic",
+          },
+        },
+      },
+    }
+    lspconfig.lua_ls.setup{
+      capabilities=capabilities,
+      settings={
+        Lua = {
+          diagnostics = {globals={'vim'}}
+        }
+      }
+    }
+  end
 end
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
