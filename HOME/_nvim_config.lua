@@ -38,7 +38,6 @@ local function _require(module_name)
   return {setup = anyFunc, init = anyFunc, default_capabilities = anyFunc }
 end
 
-
 local gitlinker = require_or_nil('gitlinker')
 if gitlinker then
   gitlinker.setup()
@@ -318,8 +317,7 @@ return require('packer').startup(function(use)
   use 'nvim-tree/nvim-tree.lua'
 
   use {
-    'nvim-telescope/telescope.nvim', tag = '0.1.4',
-  -- or                            , branch = '0.1.x',
+    'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
   use 'L3MON4D3/LuaSnip'
