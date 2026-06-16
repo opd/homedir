@@ -197,20 +197,45 @@ if cmp then
 end
 
 local capabilities = _require('cmp_nvim_lsp').default_capabilities()
+
+local function get_local_tsgo_cmd(root_dir)
+  if not root_dir or root_dir == '' then
+    return nil
+  end
+
+  local local_tsgo = vim.fs.joinpath(root_dir, 'node_modules/.bin', 'tsgo')
+  if vim.fn.executable(local_tsgo) == 1 then
+    return { local_tsgo, '--lsp', '--stdio' }
+  end
+
+  return nil
+end
+
+local function start_typescript_rpc(dispatchers, config)
+  local root_dir = config and config.root_dir or nil
+  local tsgo_cmd = get_local_tsgo_cmd(root_dir)
+  if tsgo_cmd then
+    return vim.lsp.rpc.start(tsgo_cmd, dispatchers)
+  end
+
+  local ts_ls_cmd = 'typescript-language-server'
+  if root_dir then
+    local local_ts_ls_cmd = vim.fs.joinpath(root_dir, 'node_modules/.bin', ts_ls_cmd)
+    if vim.fn.executable(local_ts_ls_cmd) == 1 then
+      ts_ls_cmd = local_ts_ls_cmd
+    end
+  end
+
+  return vim.lsp.rpc.start({ ts_ls_cmd, '--stdio' }, dispatchers)
+end
+
 if vim.lsp and vim.lsp.config and vim.lsp.enable then
   vim.lsp.config('pyright', {
     capabilities = capabilities,
   })
   vim.lsp.config('ts_ls', {
+    cmd = start_typescript_rpc,
     capabilities = capabilities,
-    settings = {
-      python = {
-        analysis = {
-          autoImportCompletions = true,
-          typeCheckingMode = "basic",
-        },
-      },
-    },
   })
   vim.lsp.config('lua_ls', {
     capabilities = capabilities,
@@ -227,15 +252,8 @@ else
     -- lspconfig.pylsp.setup{capabilities=capabilities}
     lspconfig.pyright.setup{capabilities=capabilities}
     lspconfig.ts_ls.setup{
+      cmd = start_typescript_rpc,
       capabilities=capabilities,
-      settings = {
-        python = {
-          analysis = {
-            autoImportCompletions = true,
-            typeCheckingMode = "basic",
-          },
-        },
-      },
     }
     lspconfig.lua_ls.setup{
       capabilities=capabilities,

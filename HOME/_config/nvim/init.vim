@@ -282,9 +282,7 @@ Plug 'ap/vim-css-color', {'for': ['css', 'sass', 'scss', 'less', 'ts']}
 " ALL {{{
 "
 " comments, commenter
-" Language Server Client
-" :CocInstall coc-pyright, coc-tsserver
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Native LSP is configured below with vim.lsp.config()/vim.lsp.enable().
 " cfg_caw
 Plug 'tyru/caw.vim'
 " check context file type for comments
@@ -632,22 +630,6 @@ let g:AutoPairsShortcutJump = '<S-tab>'
 " cfg_comfortablemotion
 let g:comfortable_motion_friction = 600.0
 let g:comfortable_motion_air_drag = 1.0
-" cfg_language_client
-function LC_maps()
-  if has_key(g:LanguageClient_serverCommands, &filetype)
-    nnoremap <buffer> <silent> K :call LanguageClient#textDocument_hover()<cr>
-    nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
-    nnoremap <buffer> <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-  endif
-endfunction
-
-" npm install vue-language-server -g
-let g:LanguageClient_serverCommands = {
-    \ 'vue': ['vls']
-    \ }
-
-
-autocmd FileType * call LC_maps()
 
 " cfg_ultisnips
 let g:UltiSnipsExpandTrigger="<c-b>"
@@ -665,8 +647,136 @@ let g:user_emmet_settings = {
 \  },
 \}
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gu <Plug>(coc-references)
+lua << EOF
+local lsp_group = vim.api.nvim_create_augroup('my_native_lsp', { clear = true })
+
+local function first_executable(commands)
+  for _, cmd in ipairs(commands) do
+    if vim.fn.executable(cmd[1]) == 1 then
+      return cmd
+    end
+  end
+end
+
+local function find_project_python(root_dir)
+  if not root_dir or root_dir == '' then
+    return nil
+  end
+
+  local candidates = {
+    root_dir .. '/.venv/bin/python',
+    root_dir .. '/venv/bin/python',
+  }
+
+  for _, path in ipairs(candidates) do
+    if vim.uv.fs_stat(path) then
+      return path
+    end
+  end
+
+  return nil
+end
+
+local function configure_lsp(name, config)
+  if not config.cmd then
+    return
+  end
+
+  vim.lsp.config(name, config)
+  vim.lsp.enable(name)
+end
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = lsp_group,
+  callback = function(ev)
+    local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+    local map = function(mode, lhs, rhs)
+      vim.keymap.set(mode, lhs, rhs, { buffer = ev.buf, silent = true })
+    end
+
+    map('n', 'gd', vim.lsp.buf.definition)
+    map('n', 'gu', vim.lsp.buf.references)
+    map('n', 'gi', vim.lsp.buf.implementation)
+    map('n', '<F2>', vim.lsp.buf.rename)
+    map('n', '<leader>ca', vim.lsp.buf.code_action)
+
+    if client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
+  end,
+})
+
+configure_lsp('pyright', {
+  cmd = first_executable({
+    { 'pyright-langserver', '--stdio' },
+    { 'basedpyright-langserver', '--stdio' },
+  }),
+  filetypes = { 'python' },
+  root_markers = {
+    'pyproject.toml',
+    'setup.py',
+    'setup.cfg',
+    'requirements.txt',
+    '.git',
+  },
+  before_init = function(_, config)
+    local python = find_project_python(config.root_dir)
+    if not python then
+      return
+    end
+
+    config.settings = vim.tbl_deep_extend('force', config.settings or {}, {
+      python = {
+        pythonPath = python,
+      },
+    })
+  end,
+  settings = {
+    python = {
+      analysis = {
+        autoSearchPaths = true,
+        diagnosticMode = 'workspace',
+        useLibraryCodeForTypes = true,
+      },
+    },
+  },
+})
+
+configure_lsp('ts_ls', {
+  cmd = first_executable({
+    { 'typescript-language-server', '--stdio' },
+    { 'vtsls', '--stdio' },
+  }),
+  filetypes = {
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+  },
+  root_markers = {
+    'tsconfig.json',
+    'jsconfig.json',
+    'package.json',
+    '.git',
+  },
+})
+
+configure_lsp('vue_ls', {
+  cmd = first_executable({
+    { 'vue-language-server', '--stdio' },
+    { 'vls' },
+  }),
+  filetypes = { 'vue' },
+  root_markers = {
+    'vue.config.js',
+    'vue.config.ts',
+    'vite.config.js',
+    'vite.config.ts',
+    'package.json',
+    '.git',
+  },
+})
+EOF
 
 " cfg_switch
 let g:switch_custom_definitions =
